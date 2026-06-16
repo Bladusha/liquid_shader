@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: eef03b931bbd1f04b995d6f7a7329dc4
+TextScriptImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 267985
+  packageName: WebGL Video Player
+  packageVersion: 1.0.2
+  assetPath: Packages/com.nfynt.wvp/CHANGELOG.md
+  uploadId: 678235

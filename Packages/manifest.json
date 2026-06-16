@@ -1,0 +1,21 @@
+{
+  "dependencies": {
+    "com.coplaydev.unity-mcp": "file:C:/UnityPackages/unity-mcp/unity-mcp-beta/MCPForUnity",
+    "com.openai.codex-unity-bridge": "file:C:/Users/bodro/OneDrive/Рабочий стол/CodexUnityBridge",
+    "com.unity.ai.assistant": "2.12.0-pre.2",
+    "com.unity.ai.inference": "2.6.1",
+    "com.unity.ai.navigation": "2.0.12",
+    "com.unity.cinemachine": "3.1.2",
+    "com.unity.inputsystem": "1.19.0",
+    "com.unity.ml-agents": "4.0.3",
+    "com.unity.render-pipelines.universal": "17.4.0",
+    "com.unity.sentis": "2.2.0",
+    "com.unity.test-framework": "1.6.0",
+    "com.unity.timeline": "1.8.12",
+    "com.unity.ugui": "2.0.0",
+    "com.unity.visualeffectgraph": "17.4.0",
+    "com.unity.modules.adaptiveperformance": "1.0.0",
+    "com.unity.modules.vectorgraphics": "1.0.0",
+    "com.unity.modules.video": "1.0.0"
+  }
+}

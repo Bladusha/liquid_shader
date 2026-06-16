@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 279a16f31a0bbe843932f5fc6726a1fd
+AssemblyDefinitionImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 267985
+  packageName: WebGL Video Player
+  packageVersion: 1.0.2
+  assetPath: Packages/com.nfynt.wvp/Runtime/nfynt.wvp.asmdef
+  uploadId: 678235

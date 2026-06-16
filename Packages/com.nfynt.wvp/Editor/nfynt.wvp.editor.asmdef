@@ -1,0 +1,18 @@
+{
+    "name": "nfynt.wvp.editor",
+    "rootNamespace": "",
+    "references": [
+        "GUID:279a16f31a0bbe843932f5fc6726a1fd"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

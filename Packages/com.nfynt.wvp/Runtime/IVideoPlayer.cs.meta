@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: 290c78dad4520794986b39a2b47ca614
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 267985
+  packageName: WebGL Video Player
+  packageVersion: 1.0.2
+  assetPath: Packages/com.nfynt.wvp/Runtime/IVideoPlayer.cs
+  uploadId: 678235
