@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: d52a135df969e10498973e9ce39e7856
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 267985
+  packageName: WebGL Video Player
+  packageVersion: 1.0.2
+  assetPath: Packages/com.nfynt.wvp/Samples~/Examples/TestWVP.cs
+  uploadId: 678235

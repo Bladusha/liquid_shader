@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 48e2c8289e25cf1448734406e97c20de
+DefaultImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 267985
+  packageName: WebGL Video Player
+  packageVersion: 1.0.2
+  assetPath: Packages/com.nfynt.wvp/Samples~/Examples/SampleScene.unity
+  uploadId: 678235

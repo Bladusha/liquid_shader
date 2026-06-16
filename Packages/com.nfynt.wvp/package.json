@@ -1,0 +1,30 @@
+{
+    "name": "com.nfynt.wvp",
+    "version": "1.0.2",
+    "displayName": "Web Video Player",
+    "description": "Unity web video player",
+    "unity": "2020.3",
+    "unityRelease": "30f1",
+    "samples": [
+          {
+              "displayName": "Examples",
+                "description": "Video player sample scenes",
+              "path": "Samples~/Examples"
+          }
+    ],
+    "license": "MIT",
+    "author": {
+      "name": "Shubham",
+      "email": "nfynt.public@gmail.com"
+    },
+   "keywords": [
+      "WebGL",
+      "VideoPlayer",
+      "nfynt",
+      "browser",
+      "video"
+    ],
+    "bugs": {
+      "url": "https://github.com/nfynt/com.nfynt.wvp/issues"
+    }
+  }
