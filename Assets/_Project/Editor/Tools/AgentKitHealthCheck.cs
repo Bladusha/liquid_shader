@@ -31,8 +31,7 @@ namespace Project.Editor
             {
                 "com.unity.inputsystem",
                 "com.unity.ml-agents",
-                "com.unity.sentis",
-                "com.coplaydev.unity-mcp"
+                "com.unity.sentis"
             };
 
             if (packageListRequest.Status == StatusCode.Success)
