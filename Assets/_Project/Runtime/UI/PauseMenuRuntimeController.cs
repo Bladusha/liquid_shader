@@ -159,7 +159,7 @@ public class PauseMenuRuntimeController : MonoBehaviour
             currentPauseMenuInstance = null;
         }
 
-        foreach (GameObject obj in FindObjectsByType<GameObject>(FindObjectsInactive.Exclude))
+        foreach (GameObject obj in FindObjectsByType<GameObject>(FindObjectsSortMode.None))
         {
             if (!ShouldDestroyMenuObject(obj))
             {
@@ -208,7 +208,7 @@ public class PauseMenuRuntimeController : MonoBehaviour
             return targetCanvas;
         }
 
-        foreach (Canvas canvas in FindObjectsByType<Canvas>(FindObjectsInactive.Exclude))
+        foreach (Canvas canvas in FindObjectsByType<Canvas>(FindObjectsSortMode.None))
         {
             if (canvas.renderMode == RenderMode.ScreenSpaceOverlay ||
                 canvas.renderMode == RenderMode.ScreenSpaceCamera)

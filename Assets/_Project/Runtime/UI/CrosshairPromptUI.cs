@@ -20,8 +20,8 @@ public class CrosshairPromptUI : MonoBehaviour
     [SerializeField] private float dotSize = 10f;
     [SerializeField] private float outlineSpace = 10f;
     [SerializeField] private float outlineSize = 4f;
-    [SerializeField] private Color dotColor = Color.orange;
-    [SerializeField] private Color outlineColor = Color.orange;
+    [SerializeField] private Color dotColor = new Color(1f, 0.5f, 0f, 1f);
+    [SerializeField] private Color outlineColor = new Color(1f, 0.5f, 0f, 1f);
     [SerializeField] private bool useBlend = true;
     [SerializeField] private Vector2 topLeftHoverPadding = new Vector2(-13f, 5f);
     [SerializeField] private Vector2 topRightHoverPadding = new Vector2(5f, 5f);
@@ -44,7 +44,7 @@ public class CrosshairPromptUI : MonoBehaviour
     [SerializeField] private Vector2 promptSize = new Vector2(900f, 120f);
     [SerializeField] private Vector2 promptOffset = new Vector2(0f, 90f);
     [SerializeField] private Color promptBackground = new Color(0f, 0f, 0f, 0.45f);
-    [SerializeField] private Color promptTextColor = Color.orange;
+    [SerializeField] private Color promptTextColor = new Color(1f, 0.5f, 0f, 1f);
     [SerializeField] private string idleText = "";
     [SerializeField] private string defaultPrompt = "Наведите взгляд на объект для взаимодействия";
 

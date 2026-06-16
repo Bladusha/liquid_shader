@@ -9,12 +9,12 @@ public class ReviewWindowEditor : Editor
 
     static ReviewWindowEditor()
     {
-        EditorApplication.hierarchyWindowItemByEntityIdOnGUI += DrawReviewIcon;
+        EditorApplication.hierarchyWindowItemOnGUI += DrawReviewIcon;
     }
 
-    private static void DrawReviewIcon(EntityId entityId, Rect selectionRect)
+    private static void DrawReviewIcon(int instanceId, Rect selectionRect)
     {
-        GameObject go = EditorUtility.EntityIdToObject(entityId) as GameObject;
+        GameObject go = EditorUtility.InstanceIDToObject(instanceId) as GameObject;
         if (go == null) return;
 
         if (go.GetComponent<FirstPersonController>() != null)

@@ -391,7 +391,7 @@ public class PositionSliderMenuController : MonoBehaviour
     {
         disabledScriptCache.Clear();
 
-        foreach (MonoBehaviour script in FindObjectsByType<MonoBehaviour>(FindObjectsInactive.Exclude))
+        foreach (MonoBehaviour script in FindObjectsByType<MonoBehaviour>(FindObjectsSortMode.None))
         {
             if (script == this || script == null || !script.enabled)
             {

@@ -12,8 +12,6 @@
     "com.unity.timeline": "1.8.12",
     "com.unity.ugui": "2.0.0",
     "com.unity.visualeffectgraph": "17.4.0",
-    "com.unity.modules.adaptiveperformance": "1.0.0",
-    "com.unity.modules.vectorgraphics": "1.0.0",
     "com.unity.modules.video": "1.0.0"
   }
 }
