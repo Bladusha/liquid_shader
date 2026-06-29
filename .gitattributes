@@ -1,0 +1,28 @@
+# Portable download branch.
+# Keep project files as normal Git blobs so GitHub source ZIP archives contain
+# real Unity assets instead of Git LFS pointer files.
+
+*.cs text diff=csharp
+*.shader text
+*.asmdef text
+*.inputactions text
+
+*.anim text eol=lf
+*.asset text eol=lf
+*.controller text eol=lf
+*.mat text eol=lf
+*.meta text eol=lf
+*.prefab text eol=lf
+*.unity text eol=lf
+
+*.fbx -text
+*.FBX -text
+*.obj -text
+*.png -text
+*.jpg -text
+*.jpeg -text
+*.bmp -text
+*.tga -text
+*.psd -text
+*.tif -text
+*.tiff -text
