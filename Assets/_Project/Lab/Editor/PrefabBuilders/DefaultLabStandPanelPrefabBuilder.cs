@@ -1,4 +1,5 @@
 using System.IO;
+using Lab.UI;
 using TMPro;
 using UnityEditor;
 using UnityEngine;
@@ -6,14 +7,14 @@ using UnityEngine.UI;
 
 public static class DefaultLabStandPanelPrefabBuilder
 {
-    private const string PrefabPath = "Assets/_Project/Lab01/Prefabs/DefaultLabStandPanel.prefab";
+    private const string PrefabPath = "Assets/_Project/Lab/Prefabs/DefaultLabStandPanel.prefab";
 
     [MenuItem("Tools/LiquidShader/Create Default Lab Stand Panel Prefab")]
     public static void CreatePrefab()
     {
         try
         {
-            EnsureFolder("Assets/_Project/Lab01/Prefabs");
+            EnsureFolder("Assets/_Project/Lab/Prefabs");
 
             GameObject root = BuildPrefabHierarchy();
             GameObject savedPrefab = PrefabUtility.SaveAsPrefabAsset(root, PrefabPath);
@@ -41,11 +42,11 @@ public static class DefaultLabStandPanelPrefabBuilder
     {
         Vector2 panelSize = new Vector2(720f, 520f);
         Vector2 bodySize = new Vector2(620f, 330f);
-        Color panelColor = new Color(0.09f, 0.11f, 0.15f, 0.96f);
-        Color backdropColor = new Color(0.02f, 0.03f, 0.05f, 0.72f);
-        Color accentColor = new Color(0.16f, 0.58f, 0.88f, 1f);
-        Color textColor = new Color(0.92f, 0.96f, 1f, 1f);
-        Color secondaryTextColor = new Color(0.78f, 0.86f, 0.95f, 1f);
+        Color panelColor = HydrodynamicsUiTheme.Panel;
+        Color backdropColor = HydrodynamicsUiTheme.Backdrop;
+        Color accentColor = HydrodynamicsUiTheme.Water;
+        Color textColor = HydrodynamicsUiTheme.Text;
+        Color secondaryTextColor = HydrodynamicsUiTheme.MutedText;
 
         GameObject root = new GameObject("DefaultLabStandPanel", typeof(RectTransform), typeof(DefaultLabStandPanelView));
         RectTransform rootRect = root.GetComponent<RectTransform>();
@@ -59,11 +60,17 @@ public static class DefaultLabStandPanelPrefabBuilder
         GameObject panel = CreateImage(root.transform, "Panel", new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f), panelSize, Vector2.zero, panelColor);
         panel.GetComponent<RectTransform>().pivot = new Vector2(0.5f, 0.5f);
 
-        GameObject accent = CreateImage(panel.transform, "Accent", new Vector2(0.5f, 1f), new Vector2(0.5f, 1f), new Vector2(panelSize.x - 72f, 6f), new Vector2(0f, -34f), accentColor);
+        GameObject header = CreateImage(panel.transform, "WaterHeader", new Vector2(0.5f, 1f), new Vector2(0.5f, 1f), new Vector2(panelSize.x - 48f, 68f), new Vector2(0f, -24f), HydrodynamicsUiTheme.Water);
+        header.GetComponent<RectTransform>().pivot = new Vector2(0.5f, 1f);
+
+        GameObject accent = CreateImage(panel.transform, "Accent", new Vector2(0.5f, 1f), new Vector2(0.5f, 1f), new Vector2(132f, 6f), new Vector2(0f, -104f), HydrodynamicsUiTheme.Accent);
         accent.GetComponent<RectTransform>().pivot = new Vector2(0.5f, 1f);
 
-        TMP_Text title = CreateText(panel.transform, "Title", "Паспорт лабораторного стенда", 30f, FontStyles.Bold, TextAlignmentOptions.Center, textColor);
-        SetRect(title.rectTransform, new Vector2(0.5f, 1f), new Vector2(0.5f, 1f), new Vector2(panelSize.x - 80f, 48f), new Vector2(0f, -70f), new Vector2(0.5f, 1f));
+        TMP_Text title = CreateText(panel.transform, "Title", "Паспорт лабораторного стенда", 30f, FontStyles.Bold, TextAlignmentOptions.Center, HydrodynamicsUiTheme.TextOnDark);
+        SetRect(title.rectTransform, new Vector2(0.5f, 1f), new Vector2(0.5f, 1f), new Vector2(panelSize.x - 80f, 48f), new Vector2(0f, -38f), new Vector2(0.5f, 1f));
+
+        GameObject bodySurface = CreateImage(panel.transform, "BodySurface", new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f), new Vector2(640f, 310f), new Vector2(0f, -18f), HydrodynamicsUiTheme.Surface);
+        bodySurface.GetComponent<Image>().raycastTarget = false;
 
         TMP_Text body = CreateText(panel.transform, "Body", "Данные появятся во время запуска сцены.", 22f, FontStyles.Normal, TextAlignmentOptions.TopLeft, textColor);
         body.textWrappingMode = TextWrappingModes.Normal;
@@ -73,11 +80,24 @@ public static class DefaultLabStandPanelPrefabBuilder
         TMP_Text footer = CreateText(panel.transform, "Footer", "E / Esc - закрыть", 18f, FontStyles.Bold, TextAlignmentOptions.Center, secondaryTextColor);
         SetRect(footer.rectTransform, new Vector2(0.5f, 0f), new Vector2(0.5f, 0f), new Vector2(panelSize.x - 220f, 34f), new Vector2(-52f, 32f), new Vector2(0.5f, 0f));
 
-        Button recordButton = CreateButton(panel.transform, "RecordButton", "Записать данные", new Vector2(190f, 42f), new Vector2(-196f, 34f), accentColor);
-        Button closeButton = CreateButton(panel.transform, "CloseButton", "Close", new Vector2(132f, 42f), new Vector2(panelSize.x * 0.5f - 114f, 34f), accentColor);
+        GameObject notificationRoot = CreateImage(panel.transform, "RecordNotification", new Vector2(0.5f, 0f), new Vector2(0.5f, 0f), new Vector2(380f, 46f), new Vector2(0f, 96f), HydrodynamicsUiTheme.WaterDark);
+        notificationRoot.GetComponent<RectTransform>().pivot = new Vector2(0.5f, 0f);
+
+        TMP_Text notificationLabel = CreateText(notificationRoot.transform, "Message", "Запись номер 1 сохранена!", 18f, FontStyles.Bold, TextAlignmentOptions.Center, Color.white);
+        notificationLabel.textWrappingMode = TextWrappingModes.NoWrap;
+        notificationLabel.overflowMode = TextOverflowModes.Ellipsis;
+        notificationLabel.rectTransform.anchorMin = Vector2.zero;
+        notificationLabel.rectTransform.anchorMax = Vector2.one;
+        notificationLabel.rectTransform.offsetMin = new Vector2(16f, 8f);
+        notificationLabel.rectTransform.offsetMax = new Vector2(-16f, -8f);
+        notificationRoot.SetActive(false);
+
+        Button recordButton = CreateButton(panel.transform, "RecordButton", "Записать данные", new Vector2(190f, 44f), new Vector2(-196f, 34f), accentColor);
+        Button calculationButton = CreateButton(panel.transform, "CalculationButton", "Перейти к расчётам", new Vector2(224f, 44f), new Vector2(0f, 34f), accentColor);
+        Button closeButton = CreateButton(panel.transform, "CloseButton", "Закрыть", new Vector2(132f, 44f), new Vector2(panelSize.x * 0.5f - 114f, 34f), HydrodynamicsUiTheme.Accent);
 
         DefaultLabStandPanelView view = root.GetComponent<DefaultLabStandPanelView>();
-        view.Configure(title, body, footer, recordButton, closeButton);
+        view.Configure(title, body, footer, notificationRoot, notificationLabel, recordButton, calculationButton, closeButton);
         return root;
     }
 
@@ -135,12 +155,7 @@ public static class DefaultLabStandPanelPrefabBuilder
         image.color = accentColor;
 
         Button button = buttonObject.GetComponent<Button>();
-        ColorBlock colors = button.colors;
-        colors.normalColor = accentColor;
-        colors.highlightedColor = new Color(0.22f, 0.68f, 0.98f, 1f);
-        colors.pressedColor = new Color(0.10f, 0.38f, 0.62f, 1f);
-        colors.selectedColor = colors.highlightedColor;
-        button.colors = colors;
+        button.colors = HydrodynamicsUiTheme.ButtonColors(accentColor);
 
         TMP_Text labelText = CreateText(buttonObject.transform, "Label", label, 20f, FontStyles.Bold, TextAlignmentOptions.Center, Color.white);
         labelText.rectTransform.anchorMin = Vector2.zero;

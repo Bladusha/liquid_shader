@@ -1,5 +1,7 @@
+using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.IO;
 using System.Text;
 using UnityEngine;
 
@@ -52,6 +54,97 @@ public static class Lab01WorkSession
         public string Regime { get; }
     }
 
+    // --- Persistence ---
+    [Serializable]
+    private class PersistedData
+    {
+        public int recordAttemptCount;
+        public List<PersistedSubmittedRow> submittedRows = new List<PersistedSubmittedRow>();
+    }
+
+    [Serializable]
+    private class PersistedSubmittedRow
+    {
+        public int attemptNumber;
+        public float diameter;
+        public float area;
+        public float flow;
+        public float velocity;
+        public float temperature;
+        public float viscosity;
+        public float reynolds;
+        public string regime;
+    }
+
+    private static string SavePath => Path.Combine(Application.persistentDataPath, "lab01_session.json");
+
+    public static void Save()
+    {
+        try
+        {
+            var data = new PersistedData
+            {
+                recordAttemptCount = RecordAttemptCount
+            };
+            foreach (var row in submittedRows)
+            {
+                data.submittedRows.Add(new PersistedSubmittedRow
+                {
+                    attemptNumber = row.AttemptNumber,
+                    diameter = row.Diameter,
+                    area = row.Area,
+                    flow = row.Flow,
+                    velocity = row.Velocity,
+                    temperature = row.Temperature,
+                    viscosity = row.Viscosity,
+                    reynolds = row.Reynolds,
+                    regime = row.Regime
+                });
+            }
+            string json = JsonUtility.ToJson(data, true);
+            File.WriteAllText(SavePath, json, Encoding.UTF8);
+        }
+        catch (Exception ex)
+        {
+            Debug.LogWarning($"Lab01WorkSession: failed to save — {ex.Message}");
+        }
+    }
+
+    public static void Load()
+    {
+        try
+        {
+            if (!File.Exists(SavePath))
+            {
+                return;
+            }
+            string json = File.ReadAllText(SavePath, Encoding.UTF8);
+            var data = JsonUtility.FromJson<PersistedData>(json);
+            if (data == null)
+            {
+                return;
+            }
+            RecordAttemptCount = data.recordAttemptCount;
+            submittedRows.Clear();
+            if (data.submittedRows != null)
+            {
+                foreach (var row in data.submittedRows)
+                {
+                    submittedRows.Add(new SubmittedEntry(
+                        row.attemptNumber, row.diameter, row.area, row.flow,
+                        row.velocity, row.temperature, row.viscosity, row.reynolds, row.regime));
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            Debug.LogWarning($"Lab01WorkSession: failed to load — {ex.Message}");
+        }
+    }
+
+    [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterSceneLoad)]
+    private static void AutoLoad() => Load();
+
     public static bool HasSnapshot { get; private set; }
     public static bool AreaSolved { get; private set; }
     public static bool VelocitySolved { get; private set; }
@@ -61,6 +154,7 @@ public static class Lab01WorkSession
     public static int SnapshotVersion { get; private set; }
     public static int CurrentAttemptNumber => HasSnapshot ? RecordAttemptCount : 0;
     public static int RecordCount => recordHistory.Count;
+    public static int SubmittedCount => submittedRows.Count;
 
     public static WaterController.LabMeasurements Snapshot { get; private set; }
     public static float Area { get; private set; }
@@ -72,9 +166,41 @@ public static class Lab01WorkSession
     private static readonly List<RecordEntry> recordHistory = new List<RecordEntry>();
     private static readonly List<SubmittedEntry> submittedRows = new List<SubmittedEntry>();
 
+    /// <summary>
+    /// Простая запись измерений (без валидации). Для кнопки снимка.
+    /// </summary>
+    public static void Record(WaterController.LabMeasurements measurements)
+    {
+        TryRecord(measurements, out _);
+    }
+
+    /// <summary>
+    /// Очищает все записи и снимки.
+    /// </summary>
+    public static void Clear()
+    {
+        HasSnapshot = false;
+        AreaSolved = false;
+        VelocitySolved = false;
+        ViscositySolved = false;
+        ReynoldsSolved = false;
+        RecordAttemptCount = 0;
+        SnapshotVersion = 0;
+        Snapshot = default;
+        Area = 0f;
+        Velocity = 0f;
+        Viscosity = 0f;
+        Reynolds = 0f;
+        Regime = "-";
+        recordHistory.Clear();
+        submittedRows.Clear();
+        Save();
+    }
+
     public static bool CanSubmit => HasSnapshot && AreaSolved && VelocitySolved && ViscositySolved && ReynoldsSolved;
     public static bool HasValidSnapshot => HasSnapshot && IsPositive(Snapshot.pipeInnerDiameterMeters) && IsNonNegative(Snapshot.volumetricFlowCubicMetersPerSecond) && IsFinite(Snapshot.temperatureCelsius);
     public static IReadOnlyList<RecordEntry> RecordHistory => recordHistory;
+    public static IReadOnlyList<SubmittedEntry> SubmittedRows => submittedRows;
 
     public static bool TryRecord(WaterController.LabMeasurements measurements, out string error)
     {
@@ -284,6 +410,21 @@ public static class Lab01WorkSession
         return builder.ToString();
     }
 
+    public static bool TryGetSubmittedRow(int attemptNumber, out SubmittedEntry row)
+    {
+        for (int i = 0; i < submittedRows.Count; i++)
+        {
+            if (submittedRows[i].AttemptNumber == attemptNumber)
+            {
+                row = submittedRows[i];
+                return true;
+            }
+        }
+
+        row = default;
+        return false;
+    }
+
     public static string ResolveRegime(float reynolds)
     {
         if (reynolds < 2300f)
@@ -351,11 +492,13 @@ public static class Lab01WorkSession
             if (submittedRows[i].AttemptNumber == row.AttemptNumber)
             {
                 submittedRows[i] = row;
+                Save();
                 return;
             }
         }
 
         submittedRows.Add(row);
+        Save();
     }
 
     private static string FormatMeasurementsForLog(string prefix, WaterController.LabMeasurements measurements)

@@ -1,0 +1,78 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080" fill="none">
+<defs>
+  <linearGradient id="waterGrad" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0%" stop-color="#ffffff"/>
+    <stop offset="48%" stop-color="#73d8ff"/>
+    <stop offset="100%" stop-color="#19aee7"/>
+  </linearGradient>
+  <linearGradient id="waterLine" x1="0" y1="0" x2="1" y2="0">
+    <stop offset="0%" stop-color="#73d8ff"/>
+    <stop offset="58%" stop-color="#19aee7"/>
+    <stop offset="100%" stop-color="#0b6f9f"/>
+  </linearGradient>
+  <filter id="shadowSoft" x="-18%" y="-22%" width="136%" height="148%">
+    <feDropShadow dx="0" dy="10" stdDeviation="14" flood-color="#75aec8" flood-opacity="0.22"/>
+  </filter>
+  <filter id="shadowTight" x="-18%" y="-28%" width="136%" height="156%">
+    <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#75aec8" flood-opacity="0.20"/>
+  </filter>
+  
+</defs>
+<rect x="0" y="0" width="1920" height="1080" fill="#d7d9dc"/>
+<rect x="360" y="168" width="1200" height="744" rx="42" fill="#eef1f3" fill-opacity="0.86" stroke="#c5cbd0" stroke-width="2.5" filter="url(#shadowSoft)"/>
+<rect x="392" y="200" width="1136" height="680" rx="26" stroke="#cbd4da" stroke-width="1.5" opacity="0.86"/>
+<path d="M 506 248 L 1414 248" stroke="#123247" stroke-width="5" opacity="0.72" stroke-linecap="round"/>
+<text x="960" y="314" text-anchor="middle" font-family="Arial, sans-serif" font-size="43" fill="#0b6f9f" font-weight="800">Паспорт лабораторного стенда</text>
+<text x="960" y="350" text-anchor="middle" font-family="Arial, sans-serif" font-size="24" fill="#5f8498" font-weight="800">Текущая строка таблицы ЛР №1</text>
+
+<rect x="520" y="356" width="366" height="58" rx="18" fill="#ffffff" fill-opacity="0.72" stroke="#c8ecf9" stroke-width="1.5"/>
+<text x="544" y="393" font-family="Arial, sans-serif" font-size="23" fill="#0b6f9f" font-weight="800">d</text>
+<text x="646" y="393" font-family="Arial, sans-serif" font-size="23" fill="#123247" font-weight="800">0,012 м</text>
+
+<rect x="520" y="434" width="366" height="58" rx="18" fill="#ffffff" fill-opacity="0.72" stroke="#c8ecf9" stroke-width="1.5"/>
+<text x="544" y="471" font-family="Arial, sans-serif" font-size="23" fill="#0b6f9f" font-weight="800">f</text>
+<text x="646" y="471" font-family="Arial, sans-serif" font-size="23" fill="#123247" font-weight="800">0,000113 м²</text>
+
+<rect x="520" y="512" width="366" height="58" rx="18" fill="#ffffff" fill-opacity="0.72" stroke="#c8ecf9" stroke-width="1.5"/>
+<text x="544" y="549" font-family="Arial, sans-serif" font-size="23" fill="#0b6f9f" font-weight="800">V</text>
+<text x="646" y="549" font-family="Arial, sans-serif" font-size="23" fill="#123247" font-weight="800">0,000019 м³/с</text>
+
+<rect x="520" y="590" width="366" height="58" rx="18" fill="#ffffff" fill-opacity="0.72" stroke="#c8ecf9" stroke-width="1.5"/>
+<text x="544" y="627" font-family="Arial, sans-serif" font-size="23" fill="#0b6f9f" font-weight="800">w</text>
+<text x="646" y="627" font-family="Arial, sans-serif" font-size="23" fill="#123247" font-weight="800">0,172 м/с</text>
+
+<rect x="950" y="356" width="366" height="58" rx="18" fill="#ffffff" fill-opacity="0.72" stroke="#c8ecf9" stroke-width="1.5"/>
+<text x="974" y="393" font-family="Arial, sans-serif" font-size="23" fill="#0b6f9f" font-weight="800">t</text>
+<text x="1076" y="393" font-family="Arial, sans-serif" font-size="23" fill="#123247" font-weight="800">20,5 ℃</text>
+
+<rect x="950" y="434" width="366" height="58" rx="18" fill="#ffffff" fill-opacity="0.72" stroke="#c8ecf9" stroke-width="1.5"/>
+<text x="974" y="471" font-family="Arial, sans-serif" font-size="23" fill="#0b6f9f" font-weight="800">ν</text>
+<text x="1076" y="471" font-family="Arial, sans-serif" font-size="23" fill="#123247" font-weight="800">9,979E-007 м²/с</text>
+
+<rect x="950" y="512" width="366" height="58" rx="18" fill="#ffffff" fill-opacity="0.72" stroke="#c8ecf9" stroke-width="1.5"/>
+<text x="974" y="549" font-family="Arial, sans-serif" font-size="23" fill="#0b6f9f" font-weight="800">Re</text>
+<text x="1076" y="549" font-family="Arial, sans-serif" font-size="23" fill="#123247" font-weight="800">2065</text>
+
+<rect x="950" y="590" width="366" height="58" rx="18" fill="#ffffff" fill-opacity="0.72" stroke="#c8ecf9" stroke-width="1.5"/>
+<text x="974" y="627" font-family="Arial, sans-serif" font-size="23" fill="#0b6f9f" font-weight="800">Режим</text>
+<text x="1076" y="627" font-family="Arial, sans-serif" font-size="23" fill="#123247" font-weight="800">Ламинарный</text>
+
+<rect x="520" y="704" width="806" height="78" rx="22" fill="#ffffff" fill-opacity="0.62" stroke="#c8ecf9" stroke-width="1.5"/>
+<text x="548" y="752" font-family="Arial, sans-serif" font-size="24" fill="#0b6f9f" font-weight="800">Проверьте значения перед записью данных.</text>
+<g>
+  <rect x="520" y="812" width="260" height="70" rx="20" fill="#ffffff" fill-opacity="0.74" stroke="#94d4ee" stroke-width="2" filter="url(#shadowTight)"/>
+  <path d="M 546 864 Q 574 861 602 864 Q 630 867 658 864 Q 686 861 714 864 Q 742 867 754 864" stroke="#73d8ff" stroke-width="3" stroke-linecap="round" fill="none" opacity="0.28"/>
+  <text x="650.0" y="855.0" text-anchor="middle" font-family="Arial, sans-serif" font-size="22" fill="#0b6f9f" font-weight="800">Записать данные</text>
+</g>
+<g>
+  <rect x="820" y="812" width="320" height="70" rx="20" fill="#ffffff" fill-opacity="0.74" stroke="#94d4ee" stroke-width="2" filter="url(#shadowTight)"/>
+  <path d="M 846 864 Q 874 861 902 864 Q 930 867 958 864 Q 986 861 1014 864 Q 1042 867 1070 864 Q 1098 861 1114 864" stroke="#73d8ff" stroke-width="3" stroke-linecap="round" fill="none" opacity="0.28"/>
+  <text x="980.0" y="855.0" text-anchor="middle" font-family="Arial, sans-serif" font-size="22" fill="#0b6f9f" font-weight="800">Перейти к расчётам</text>
+</g>
+<g>
+  <rect x="1180" y="812" width="180" height="70" rx="20" fill="#ffffff" fill-opacity="0.74" stroke="#94d4ee" stroke-width="2" filter="url(#shadowTight)"/>
+  <path d="M 1206 864 Q 1234 861 1262 864 Q 1290 867 1318 864 Q 1334 861 1334 864" stroke="#73d8ff" stroke-width="3" stroke-linecap="round" fill="none" opacity="0.28"/>
+  <text x="1270.0" y="855.0" text-anchor="middle" font-family="Arial, sans-serif" font-size="22" fill="#0b6f9f" font-weight="800">Закрыть</text>
+</g>
+<path d="M 1188 752 Q 1209 749 1230 752 Q 1251 755 1272 752 Q 1293 749 1296 752" stroke="#73d8ff" stroke-width="3" stroke-linecap="round" fill="none" opacity="0.28"/>
+</svg>

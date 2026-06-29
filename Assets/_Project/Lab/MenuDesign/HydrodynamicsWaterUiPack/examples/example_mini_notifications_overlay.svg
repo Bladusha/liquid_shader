@@ -1,0 +1,81 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080" fill="none">
+<defs>
+  <linearGradient id="waterGrad" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0%" stop-color="#ffffff"/>
+    <stop offset="48%" stop-color="#73d8ff"/>
+    <stop offset="100%" stop-color="#19aee7"/>
+  </linearGradient>
+  <linearGradient id="waterLine" x1="0" y1="0" x2="1" y2="0">
+    <stop offset="0%" stop-color="#73d8ff"/>
+    <stop offset="58%" stop-color="#19aee7"/>
+    <stop offset="100%" stop-color="#0b6f9f"/>
+  </linearGradient>
+  <filter id="shadowSoft" x="-18%" y="-22%" width="136%" height="148%">
+    <feDropShadow dx="0" dy="10" stdDeviation="14" flood-color="#75aec8" flood-opacity="0.22"/>
+  </filter>
+  <filter id="shadowTight" x="-18%" y="-28%" width="136%" height="156%">
+    <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#75aec8" flood-opacity="0.20"/>
+  </filter>
+  
+</defs>
+<rect x="0" y="0" width="1920" height="1080" fill="#eef9ff"/>
+<path d="M -40 734 Q 32 716 104 734 Q 176 752 248 734 Q 320 716 392 734 Q 464 752 536 734 Q 608 716 680 734 Q 752 752 824 734 Q 896 716 968 734 Q 1040 752 1112 734 Q 1184 716 1256 734 Q 1328 752 1400 734 Q 1472 716 1544 734 Q 1616 752 1688 734 Q 1760 716 1832 734 Q 1904 752 1960 734 L 1960 1080 L -40 1080 Z" fill="#73d8ff" opacity="0.36"/>
+<path d="M -40 834 Q 16 820 72 834 Q 128 848 184 834 Q 240 820 296 834 Q 352 848 408 834 Q 464 820 520 834 Q 576 848 632 834 Q 688 820 744 834 Q 800 848 856 834 Q 912 820 968 834 Q 1024 848 1080 834 Q 1136 820 1192 834 Q 1248 848 1304 834 Q 1360 820 1416 834 Q 1472 848 1528 834 Q 1584 820 1640 834 Q 1696 848 1752 834 Q 1808 820 1864 834 Q 1920 848 1960 834 L 1960 1080 L -40 1080 Z" fill="#19aee7" opacity="0.22"/>
+<rect x="0" y="0" width="1920" height="1080" fill="#0b2738" opacity="0.10"/>
+<g transform="translate(1130, 118)">
+<rect x="8" y="8" width="604" height="136" rx="30" fill="#ffffff" fill-opacity="0.94" stroke="#94d4ee" stroke-width="2.5" filter="url(#shadowSoft)"/>
+<rect x="26" y="26" width="568" height="100" rx="18" fill="#fbfeff" stroke="#c8ecf9" stroke-width="1.5"/>
+<g transform="translate(42,30) scale(0.66)">
+<rect x="6" y="6" width="116" height="116" rx="30" fill="#ffffff" stroke="#94d4ee" stroke-width="2.5" filter="url(#shadowSoft)"/>
+<path d="M 38 38 H 92 C 101 38 108 45 108 54 V 76 C 108 85 101 92 92 92 H 62 L 42 106 V 92 H 38 C 29 92 22 85 22 76 V 54 C 22 45 29 38 38 38 Z" fill="#fbfeff" stroke="#94d4ee" stroke-width="2"/>
+<path d="M 34 70 Q 46 65 58 70 Q 70 75 82 70 Q 94 65 96 70" stroke="#19aee7" stroke-width="4" stroke-linecap="round" fill="none"/>
+<circle cx="96" cy="32" r="11" fill="#ff8a1f"/>
+
+</g>
+<text x="142" y="64" font-family="Arial, sans-serif" font-size="26" fill="#0b6f9f" font-weight="800">Новое сообщение</text>
+<text x="142" y="96" font-family="Arial, sans-serif" font-size="20" fill="#5f8498" font-weight="600">Данные измерений добавлены</text>
+<path d="M 428 104 Q 444 99 460 104 Q 476 109 492 104 Q 508 99 524 104 Q 540 109 556 104" stroke="#73d8ff" stroke-width="5" stroke-linecap="round" fill="none"/>
+
+</g>
+<g transform="translate(1200, 300) scale(0.82)">
+<rect x="8" y="8" width="664" height="472" rx="34" fill="#ffffff" fill-opacity="0.92" stroke="#94d4ee" stroke-width="2.5" filter="url(#shadowSoft)"/>
+<rect x="26" y="26" width="628" height="436" rx="20" stroke="#c8ecf9" stroke-width="1.5"/>
+<text x="46" y="70" font-family="Arial, sans-serif" font-size="32" fill="#0b6f9f" font-weight="800">УВЕДОМЛЕНИЯ</text>
+<path d="M 394 68 Q 413 62 432 68 Q 451 74 470 68 Q 489 62 508 68 Q 527 74 546 68 Q 565 62 584 68" stroke="#19aee7" stroke-width="5" stroke-linecap="round" fill="none"/>
+
+<rect x="40" y="112" width="600" height="96" rx="24" fill="#fbfeff" stroke="#c8ecf9" stroke-width="1.5"/>
+<g transform="translate(58,130) scale(0.48)">
+<rect x="6" y="6" width="116" height="116" rx="30" fill="#ffffff" stroke="#94d4ee" stroke-width="2.5" filter="url(#shadowSoft)"/>
+<path d="M 38 38 H 92 C 101 38 108 45 108 54 V 76 C 108 85 101 92 92 92 H 62 L 42 106 V 92 H 38 C 29 92 22 85 22 76 V 54 C 22 45 29 38 38 38 Z" fill="#fbfeff" stroke="#94d4ee" stroke-width="2"/>
+<path d="M 34 70 Q 46 65 58 70 Q 70 75 82 70 Q 94 65 96 70" stroke="#19aee7" stroke-width="4" stroke-linecap="round" fill="none"/>
+<circle cx="96" cy="32" r="11" fill="#ff8a1f"/>
+
+</g>
+<text x="136" y="150" font-family="Arial, sans-serif" font-size="24" fill="#0b6f9f" font-weight="800">Новое сообщение</text>
+<text x="136" y="180" font-family="Arial, sans-serif" font-size="18" fill="#5f8498" font-weight="600">Параметры потока обновлены</text>
+
+<rect x="40" y="230" width="600" height="96" rx="24" fill="#fbfeff" stroke="#c8ecf9" stroke-width="1.5"/>
+<g transform="translate(58,248) scale(0.48)">
+<rect x="6" y="6" width="116" height="116" rx="30" fill="#ffffff" stroke="#94d4ee" stroke-width="2.5" filter="url(#shadowSoft)"/>
+<path d="M 38 38 H 92 C 101 38 108 45 108 54 V 76 C 108 85 101 92 92 92 H 62 L 42 106 V 92 H 38 C 29 92 22 85 22 76 V 54 C 22 45 29 38 38 38 Z" fill="#fbfeff" stroke="#94d4ee" stroke-width="2"/>
+<path d="M 34 70 Q 46 65 58 70 Q 70 75 82 70 Q 94 65 96 70" stroke="#19aee7" stroke-width="4" stroke-linecap="round" fill="none"/>
+<circle cx="96" cy="32" r="11" fill="#ff8a1f"/>
+
+</g>
+<text x="136" y="268" font-family="Arial, sans-serif" font-size="24" fill="#0b6f9f" font-weight="800">Расчёт готов</text>
+<text x="136" y="298" font-family="Arial, sans-serif" font-size="18" fill="#5f8498" font-weight="600">Коэффициент сопротивления пересчитан</text>
+
+<rect x="40" y="348" width="600" height="96" rx="24" fill="#fbfeff" stroke="#c8ecf9" stroke-width="1.5"/>
+<g transform="translate(58,366) scale(0.48)">
+<rect x="6" y="6" width="116" height="116" rx="30" fill="#ffffff" stroke="#94d4ee" stroke-width="2.5" filter="url(#shadowSoft)"/>
+<path d="M 38 38 H 92 C 101 38 108 45 108 54 V 76 C 108 85 101 92 92 92 H 62 L 42 106 V 92 H 38 C 29 92 22 85 22 76 V 54 C 22 45 29 38 38 38 Z" fill="#fbfeff" stroke="#94d4ee" stroke-width="2"/>
+<path d="M 34 70 Q 46 65 58 70 Q 70 75 82 70 Q 94 65 96 70" stroke="#19aee7" stroke-width="4" stroke-linecap="round" fill="none"/>
+<circle cx="96" cy="32" r="11" fill="#ff8a1f"/>
+
+</g>
+<text x="136" y="386" font-family="Arial, sans-serif" font-size="24" fill="#0b6f9f" font-weight="800">Подсказка</text>
+<text x="136" y="416" font-family="Arial, sans-serif" font-size="18" fill="#5f8498" font-weight="600">E - взаимодействовать с установкой</text>
+
+</g>
+<text x="118" y="128" font-family="Arial, sans-serif" font-size="28" fill="#5f8498" font-weight="700">пример мини-всплывающих уведомлений</text>
+</svg>

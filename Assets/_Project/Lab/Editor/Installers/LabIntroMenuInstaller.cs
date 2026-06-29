@@ -5,9 +5,9 @@ using UnityEngine;
 
 public static class LabIntroMenuInstaller
 {
-    private const string ScenePath = "Assets/_Project/Lab01/Scenes/real.unity";
+    private const string ScenePath = "Assets/_Project/Lab/LabScenes/real.unity";
     private const string RootObjectName = "LabIntroMenuBootstrap";
-    private const string PrefabPath = "Assets/_Project/Lab01/Prefabs/LabIntroMenu.prefab";
+    private const string PrefabPath = "Assets/_Project/Lab/Prefabs/LabIntroMenu.prefab";
 
     [MenuItem("Tools/LiquidShader/Install Lab Intro Menu Into Real Scene")]
     public static void InstallIntoRealScene()

@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080" fill="none">
+<defs>
+  <linearGradient id="waterGrad" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0%" stop-color="#ffffff"/>
+    <stop offset="48%" stop-color="#73d8ff"/>
+    <stop offset="100%" stop-color="#19aee7"/>
+  </linearGradient>
+  <linearGradient id="waterLine" x1="0" y1="0" x2="1" y2="0">
+    <stop offset="0%" stop-color="#73d8ff"/>
+    <stop offset="58%" stop-color="#19aee7"/>
+    <stop offset="100%" stop-color="#0b6f9f"/>
+  </linearGradient>
+  <filter id="shadowSoft" x="-18%" y="-22%" width="136%" height="148%">
+    <feDropShadow dx="0" dy="10" stdDeviation="14" flood-color="#75aec8" flood-opacity="0.22"/>
+  </filter>
+  <filter id="shadowTight" x="-18%" y="-28%" width="136%" height="156%">
+    <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#75aec8" flood-opacity="0.20"/>
+  </filter>
+  
+</defs>
+<rect x="0" y="0" width="1920" height="1080" fill="#eef9ff"/>
+<path d="M -40 720 Q 33 702 106 720 Q 179 738 252 720 Q 325 702 398 720 Q 471 738 544 720 Q 617 702 690 720 Q 763 738 836 720 Q 909 702 982 720 Q 1055 738 1128 720 Q 1201 702 1274 720 Q 1347 738 1420 720 Q 1493 702 1566 720 Q 1639 738 1712 720 Q 1785 702 1858 720 Q 1931 738 1960 720 L 1960 1080 L -40 1080 Z" fill="#73d8ff" opacity="0.40"/>
+<path d="M -40 836 Q 16 822 72 836 Q 128 850 184 836 Q 240 822 296 836 Q 352 850 408 836 Q 464 822 520 836 Q 576 850 632 836 Q 688 822 744 836 Q 800 850 856 836 Q 912 822 968 836 Q 1024 850 1080 836 Q 1136 822 1192 836 Q 1248 850 1304 836 Q 1360 822 1416 836 Q 1472 850 1528 836 Q 1584 822 1640 836 Q 1696 850 1752 836 Q 1808 822 1864 836 Q 1920 850 1960 836 L 1960 1080 L -40 1080 Z" fill="#19aee7" opacity="0.26"/>
+<rect x="58" y="42" width="1804" height="120" rx="28" fill="#ffffff" fill-opacity="0.88" stroke="#94d4ee" stroke-width="2" filter="url(#shadowTight)"/>
+<rect x="92" y="72" width="12" height="60" rx="6" fill="url(#waterLine)"/>
+<text x="138" y="116" font-family="Arial, sans-serif" font-size="42" fill="#0b6f9f" font-weight="700">МЕНЮ СЦЕНЫ</text>
+<rect x="86" y="220" width="490" height="720" rx="34" fill="#ffffff" fill-opacity="0.88" stroke="#94d4ee" stroke-width="2" filter="url(#shadowSoft)"/>
+<text x="331" y="300" text-anchor="middle" font-family="Arial, sans-serif" font-size="34" fill="#0b6f9f" font-weight="700">ПАУЗА</text>
+<g transform="translate(121, 350) scale(0.72)">
+<clipPath id="clipButtonIngameContinue"><rect x="8" y="8" width="544" height="120" rx="60"/></clipPath>
+<rect x="8" y="8" width="544" height="120" rx="60" fill="#ffffff" stroke="#94d4ee" stroke-width="2.5" filter="url(#shadowTight)"/>
+<g clip-path="url(#clipButtonIngameContinue)">
+  <path d="M -28 72 Q 1 60 30 72 Q 59 84 88 72 Q 117 60 146 72 Q 175 84 204 72 Q 233 60 262 72 Q 291 84 320 72 Q 349 60 378 72 Q 407 84 436 72 Q 465 60 494 72 Q 523 84 552 72 Q 581 60 588 72 L 588 136 L -28 136 Z" fill="url(#waterGrad)" opacity="0.96"/>
+  <path d="M -20 88 Q 12 80 44 88 Q 76 96 108 88 Q 140 80 172 88 Q 204 96 236 88 Q 268 80 300 88 Q 332 96 364 88 Q 396 80 428 88 Q 460 96 492 88 Q 524 80 556 88 Q 580 96 580 88 L 580 136 L -20 136 Z" fill="#19aee7" opacity="0.22"/>
+  <path d="M 16 72 Q 45 60 74 72 Q 103 84 132 72 Q 161 60 190 72 Q 219 84 248 72 Q 277 60 306 72 Q 335 84 364 72 Q 393 60 422 72 Q 451 84 480 72 Q 509 60 538 72 Q 548 84 548 72" stroke="#ffffff" stroke-width="6" stroke-linecap="round" fill="none" opacity="0.62"/>
+  <path d="M 20 82 Q 49 75 78 82 Q 107 89 136 82 Q 165 75 194 82 Q 223 89 252 82 Q 281 75 310 82 Q 339 89 368 82 Q 397 75 426 82 Q 455 89 484 82 Q 513 75 540 82" stroke="#0b6f9f" stroke-width="2.5" stroke-linecap="round" fill="none" opacity="0.20"/>
+</g>
+
+</g>
+<text x="323" y="410" text-anchor="middle" font-family="Arial, sans-serif" font-size="24" fill="#0b6f9f" font-weight="700">ПРОДОЛЖИТЬ</text>
+<g transform="translate(121, 474) scale(0.72)">
+<clipPath id="clipButtonIngameProtocol"><rect x="8" y="8" width="544" height="120" rx="60"/></clipPath>
+<rect x="8" y="8" width="544" height="120" rx="60" fill="#ffffff" stroke="#94d4ee" stroke-width="2.5" filter="url(#shadowTight)"/>
+<g clip-path="url(#clipButtonIngameProtocol)">
+  <path d="M -28 72 Q 1 60 30 72 Q 59 84 88 72 Q 117 60 146 72 Q 175 84 204 72 Q 233 60 262 72 Q 291 84 320 72 Q 349 60 378 72 Q 407 84 436 72 Q 465 60 494 72 Q 523 84 552 72 Q 581 60 588 72 L 588 136 L -28 136 Z" fill="url(#waterGrad)" opacity="0.96"/>
+  <path d="M -20 88 Q 12 80 44 88 Q 76 96 108 88 Q 140 80 172 88 Q 204 96 236 88 Q 268 80 300 88 Q 332 96 364 88 Q 396 80 428 88 Q 460 96 492 88 Q 524 80 556 88 Q 580 96 580 88 L 580 136 L -20 136 Z" fill="#19aee7" opacity="0.22"/>
+  <path d="M 16 72 Q 45 60 74 72 Q 103 84 132 72 Q 161 60 190 72 Q 219 84 248 72 Q 277 60 306 72 Q 335 84 364 72 Q 393 60 422 72 Q 451 84 480 72 Q 509 60 538 72 Q 548 84 548 72" stroke="#ffffff" stroke-width="6" stroke-linecap="round" fill="none" opacity="0.62"/>
+  <path d="M 20 82 Q 49 75 78 82 Q 107 89 136 82 Q 165 75 194 82 Q 223 89 252 82 Q 281 75 310 82 Q 339 89 368 82 Q 397 75 426 82 Q 455 89 484 82 Q 513 75 540 82" stroke="#0b6f9f" stroke-width="2.5" stroke-linecap="round" fill="none" opacity="0.20"/>
+</g>
+
+</g>
+<text x="323" y="535" text-anchor="middle" font-family="Arial, sans-serif" font-size="24" fill="#0b6f9f" font-weight="700">ПРОТОКОЛ</text>
+<g transform="translate(121, 598) scale(0.72)">
+<clipPath id="clipButtonIngameSettings"><rect x="8" y="8" width="544" height="120" rx="60"/></clipPath>
+<rect x="8" y="8" width="544" height="120" rx="60" fill="#ffffff" stroke="#94d4ee" stroke-width="2.5" filter="url(#shadowTight)"/>
+<g clip-path="url(#clipButtonIngameSettings)">
+  <path d="M -28 72 Q 1 60 30 72 Q 59 84 88 72 Q 117 60 146 72 Q 175 84 204 72 Q 233 60 262 72 Q 291 84 320 72 Q 349 60 378 72 Q 407 84 436 72 Q 465 60 494 72 Q 523 84 552 72 Q 581 60 588 72 L 588 136 L -28 136 Z" fill="url(#waterGrad)" opacity="0.96"/>
+  <path d="M -20 88 Q 12 80 44 88 Q 76 96 108 88 Q 140 80 172 88 Q 204 96 236 88 Q 268 80 300 88 Q 332 96 364 88 Q 396 80 428 88 Q 460 96 492 88 Q 524 80 556 88 Q 580 96 580 88 L 580 136 L -20 136 Z" fill="#19aee7" opacity="0.22"/>
+  <path d="M 16 72 Q 45 60 74 72 Q 103 84 132 72 Q 161 60 190 72 Q 219 84 248 72 Q 277 60 306 72 Q 335 84 364 72 Q 393 60 422 72 Q 451 84 480 72 Q 509 60 538 72 Q 548 84 548 72" stroke="#ffffff" stroke-width="6" stroke-linecap="round" fill="none" opacity="0.62"/>
+  <path d="M 20 82 Q 49 75 78 82 Q 107 89 136 82 Q 165 75 194 82 Q 223 89 252 82 Q 281 75 310 82 Q 339 89 368 82 Q 397 75 426 82 Q 455 89 484 82 Q 513 75 540 82" stroke="#0b6f9f" stroke-width="2.5" stroke-linecap="round" fill="none" opacity="0.20"/>
+</g>
+
+</g>
+<text x="323" y="659" text-anchor="middle" font-family="Arial, sans-serif" font-size="24" fill="#0b6f9f" font-weight="700">НАСТРОЙКИ</text>
+<rect x="690" y="240" width="1040" height="650" rx="36" fill="#ffffff" fill-opacity="0.84" stroke="#94d4ee" stroke-width="2" filter="url(#shadowSoft)"/>
+<rect x="744" y="304" width="932" height="112" rx="24" fill="#fbfeff" stroke="#c8ecf9" stroke-width="1.5"/>
+<rect x="770" y="332" width="12" height="56" rx="6" fill="url(#waterLine)"/>
+<text x="812" y="374" font-family="Arial, sans-serif" font-size="34" fill="#0b6f9f" font-weight="700">ТЕКУЩИЕ ПАРАМЕТРЫ</text>
+<rect x="744" y="466" width="442" height="242" rx="24" fill="#fbfeff" stroke="#c8ecf9" stroke-width="1.5"/>
+<rect x="1234" y="466" width="442" height="242" rx="24" fill="#fbfeff" stroke="#c8ecf9" stroke-width="1.5"/>
+<rect x="790" y="758" width="840" height="24" rx="12" fill="#e5f7ff" stroke="#c8ecf9" stroke-width="1"/>
+<rect x="790" y="758" width="520" height="24" rx="12" fill="url(#waterLine)"/>
+<text x="1510" y="960" font-family="Arial, sans-serif" font-size="24" fill="#5f8498">пример меню внутри игры</text>
+</svg>
