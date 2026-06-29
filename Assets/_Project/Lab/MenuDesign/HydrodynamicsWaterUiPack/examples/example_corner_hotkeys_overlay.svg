@@ -1,0 +1,149 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080" fill="none">
+<defs>
+  <linearGradient id="waterGrad" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0%" stop-color="#ffffff"/>
+    <stop offset="48%" stop-color="#73d8ff"/>
+    <stop offset="100%" stop-color="#19aee7"/>
+  </linearGradient>
+  <linearGradient id="waterLine" x1="0" y1="0" x2="1" y2="0">
+    <stop offset="0%" stop-color="#73d8ff"/>
+    <stop offset="58%" stop-color="#19aee7"/>
+    <stop offset="100%" stop-color="#0b6f9f"/>
+  </linearGradient>
+  <filter id="shadowSoft" x="-18%" y="-22%" width="136%" height="148%">
+    <feDropShadow dx="0" dy="10" stdDeviation="14" flood-color="#75aec8" flood-opacity="0.22"/>
+  </filter>
+  <filter id="shadowTight" x="-18%" y="-28%" width="136%" height="156%">
+    <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#75aec8" flood-opacity="0.20"/>
+  </filter>
+  
+</defs>
+<rect x="0" y="0" width="1920" height="1080" fill="#eef9ff"/>
+<path d="M -40 760 Q 32 742 104 760 Q 176 778 248 760 Q 320 742 392 760 Q 464 778 536 760 Q 608 742 680 760 Q 752 778 824 760 Q 896 742 968 760 Q 1040 778 1112 760 Q 1184 742 1256 760 Q 1328 778 1400 760 Q 1472 742 1544 760 Q 1616 778 1688 760 Q 1760 742 1832 760 Q 1904 778 1960 760 L 1960 1080 L -40 1080 Z" fill="#73d8ff" opacity="0.38"/>
+<path d="M -40 850 Q 16 836 72 850 Q 128 864 184 850 Q 240 836 296 850 Q 352 864 408 850 Q 464 836 520 850 Q 576 864 632 850 Q 688 836 744 850 Q 800 864 856 850 Q 912 836 968 850 Q 1024 864 1080 850 Q 1136 836 1192 850 Q 1248 864 1304 850 Q 1360 836 1416 850 Q 1472 864 1528 850 Q 1584 836 1640 850 Q 1696 864 1752 850 Q 1808 836 1864 850 Q 1920 864 1960 850 L 1960 1080 L -40 1080 Z" fill="#19aee7" opacity="0.23"/>
+<rect x="84" y="72" width="1752" height="936" rx="44" fill="#ffffff" fill-opacity="0.38" stroke="#c8ecf9" stroke-width="2"/>
+<text x="118" y="128" font-family="Arial, sans-serif" font-size="28" fill="#5f8498" font-weight="700">пример игрового экрана с подсказками в углу</text>
+<g transform="translate(1300, 330) scale(0.92)">
+<rect x="8" y="8" width="544" height="664" rx="34" fill="#ffffff" fill-opacity="0.58" stroke="#94d4ee" stroke-width="2.5" filter="url(#shadowSoft)"/>
+<rect x="26" y="26" width="508" height="628" rx="20" fill="#ffffff" fill-opacity="0.20" stroke="#c8ecf9" stroke-width="1.5"/>
+<text x="54" y="78" font-family="Arial, sans-serif" font-size="36" fill="#0b6f9f" font-weight="800">ПОДСКАЗКИ</text>
+<text x="54" y="112" font-family="Arial, sans-serif" font-size="20" fill="#5f8498" font-weight="700">горячие клавиши лабораторной сцены</text>
+<path d="M 320 76 Q 348 72 376 76 Q 404 80 432 76 Q 460 72 488 76" stroke="#19aee7" stroke-width="5" stroke-linecap="round" fill="none" opacity="0.88"/>
+
+<rect x="42" y="128" width="466" height="68" rx="20" fill="#fbfeff" fill-opacity="0.54" stroke="#c8ecf9" stroke-width="1.5"/>
+<g transform="translate(60,137)">
+  <clipPath id="clipKeyMenuK"><rect x="0" y="0" width="64" height="52" rx="18"/></clipPath>
+  <rect x="0" y="0" width="64" height="52" rx="18" fill="#ffffff" fill-opacity="0.90" stroke="#94d4ee" stroke-width="2" filter="url(#shadowTight)"/>
+  <g clip-path="url(#clipKeyMenuK)">
+    <path d="M -8 34 Q 13 31 34 34 Q 55 37 72 34 L 72 52 L -8 52 Z" fill="url(#waterGrad)" opacity="0.88"/>
+    <path d="M 10 33 Q 31 30 52 33 Q 54 36 54 33" stroke="#ffffff" stroke-width="3" stroke-linecap="round" fill="none" opacity="0.70"/>
+    <path d="M 10 39 Q 31 37 52 39 Q 54 41 54 39" stroke="#0b6f9f" stroke-width="1.5" stroke-linecap="round" fill="none" opacity="0.16"/>
+  </g>
+  <text x="32.0" y="36.0" text-anchor="middle" font-family="Arial, sans-serif" font-size="32" fill="#0b6f9f" font-weight="800">K</text>
+</g>
+<text x="150" y="170" font-family="Arial, sans-serif" font-size="26" fill="#123247" font-weight="800">меню подсказок</text>
+
+<rect x="42" y="206" width="466" height="68" rx="20" fill="#fbfeff" fill-opacity="0.54" stroke="#c8ecf9" stroke-width="1.5"/>
+<g transform="translate(60,215)">
+  <clipPath id="clipKeyMenuT"><rect x="0" y="0" width="64" height="52" rx="18"/></clipPath>
+  <rect x="0" y="0" width="64" height="52" rx="18" fill="#ffffff" fill-opacity="0.90" stroke="#94d4ee" stroke-width="2" filter="url(#shadowTight)"/>
+  <g clip-path="url(#clipKeyMenuT)">
+    <path d="M -8 34 Q 13 31 34 34 Q 55 37 72 34 L 72 52 L -8 52 Z" fill="url(#waterGrad)" opacity="0.88"/>
+    <path d="M 10 33 Q 31 30 52 33 Q 54 36 54 33" stroke="#ffffff" stroke-width="3" stroke-linecap="round" fill="none" opacity="0.70"/>
+    <path d="M 10 39 Q 31 37 52 39 Q 54 41 54 39" stroke="#0b6f9f" stroke-width="1.5" stroke-linecap="round" fill="none" opacity="0.16"/>
+  </g>
+  <text x="32.0" y="36.0" text-anchor="middle" font-family="Arial, sans-serif" font-size="32" fill="#0b6f9f" font-weight="800">T</text>
+</g>
+<text x="150" y="248" font-family="Arial, sans-serif" font-size="26" fill="#123247" font-weight="800">таблица измерений</text>
+
+<rect x="42" y="284" width="466" height="68" rx="20" fill="#fbfeff" fill-opacity="0.54" stroke="#c8ecf9" stroke-width="1.5"/>
+<g transform="translate(60,293)">
+  <clipPath id="clipKeyMenuC"><rect x="0" y="0" width="64" height="52" rx="18"/></clipPath>
+  <rect x="0" y="0" width="64" height="52" rx="18" fill="#ffffff" fill-opacity="0.90" stroke="#94d4ee" stroke-width="2" filter="url(#shadowTight)"/>
+  <g clip-path="url(#clipKeyMenuC)">
+    <path d="M -8 34 Q 13 31 34 34 Q 55 37 72 34 L 72 52 L -8 52 Z" fill="url(#waterGrad)" opacity="0.88"/>
+    <path d="M 10 33 Q 31 30 52 33 Q 54 36 54 33" stroke="#ffffff" stroke-width="3" stroke-linecap="round" fill="none" opacity="0.70"/>
+    <path d="M 10 39 Q 31 37 52 39 Q 54 41 54 39" stroke="#0b6f9f" stroke-width="1.5" stroke-linecap="round" fill="none" opacity="0.16"/>
+  </g>
+  <text x="32.0" y="36.0" text-anchor="middle" font-family="Arial, sans-serif" font-size="32" fill="#0b6f9f" font-weight="800">C</text>
+</g>
+<text x="150" y="326" font-family="Arial, sans-serif" font-size="26" fill="#123247" font-weight="800">расчёты</text>
+
+<rect x="42" y="362" width="466" height="68" rx="20" fill="#fbfeff" fill-opacity="0.54" stroke="#c8ecf9" stroke-width="1.5"/>
+<g transform="translate(60,371)">
+  <clipPath id="clipKeyMenuE"><rect x="0" y="0" width="64" height="52" rx="18"/></clipPath>
+  <rect x="0" y="0" width="64" height="52" rx="18" fill="#ffffff" fill-opacity="0.90" stroke="#94d4ee" stroke-width="2" filter="url(#shadowTight)"/>
+  <g clip-path="url(#clipKeyMenuE)">
+    <path d="M -8 34 Q 13 31 34 34 Q 55 37 72 34 L 72 52 L -8 52 Z" fill="url(#waterGrad)" opacity="0.88"/>
+    <path d="M 10 33 Q 31 30 52 33 Q 54 36 54 33" stroke="#ffffff" stroke-width="3" stroke-linecap="round" fill="none" opacity="0.70"/>
+    <path d="M 10 39 Q 31 37 52 39 Q 54 41 54 39" stroke="#0b6f9f" stroke-width="1.5" stroke-linecap="round" fill="none" opacity="0.16"/>
+  </g>
+  <text x="32.0" y="36.0" text-anchor="middle" font-family="Arial, sans-serif" font-size="32" fill="#0b6f9f" font-weight="800">E</text>
+</g>
+<text x="150" y="404" font-family="Arial, sans-serif" font-size="26" fill="#123247" font-weight="800">взаимодействие</text>
+
+<rect x="42" y="468" width="218" height="146" rx="24" fill="#fbfeff" fill-opacity="0.48" stroke="#c8ecf9" stroke-width="1.5"/>
+<g transform="translate(55, 484) scale(0.62)">
+<rect x="6" y="6" width="248" height="178" rx="32" fill="#ffffff" fill-opacity="0.72" stroke="#c8ecf9" stroke-width="2" filter="url(#shadowSoft)"/>
+<path d="M 32 146 Q 61 142 90 146 Q 119 150 148 146 Q 177 142 206 146 Q 228 150 228 146" stroke="#73d8ff" stroke-width="4" stroke-linecap="round" fill="none" opacity="0.72"/>
+<g transform="translate(92,22)">
+  <clipPath id="clipKeyWasdW"><rect x="0" y="0" width="68" height="56" rx="18"/></clipPath>
+  <rect x="0" y="0" width="68" height="56" rx="18" fill="#ffffff" fill-opacity="0.90" stroke="#94d4ee" stroke-width="2" filter="url(#shadowTight)"/>
+  <g clip-path="url(#clipKeyWasdW)">
+    <path d="M -8 38 Q 13 35 34 38 Q 55 41 76 38 L 76 56 L -8 56 Z" fill="url(#waterGrad)" opacity="0.88"/>
+    <path d="M 10 37 Q 31 34 52 37 Q 58 40 58 37" stroke="#ffffff" stroke-width="3" stroke-linecap="round" fill="none" opacity="0.70"/>
+    <path d="M 10 43 Q 31 41 52 43 Q 58 45 58 43" stroke="#0b6f9f" stroke-width="1.5" stroke-linecap="round" fill="none" opacity="0.16"/>
+  </g>
+  <text x="34.0" y="38.0" text-anchor="middle" font-family="Arial, sans-serif" font-size="32" fill="#0b6f9f" font-weight="800">W</text>
+</g>
+<g transform="translate(38,88)">
+  <clipPath id="clipKeyWasdA"><rect x="0" y="0" width="68" height="56" rx="18"/></clipPath>
+  <rect x="0" y="0" width="68" height="56" rx="18" fill="#ffffff" fill-opacity="0.90" stroke="#94d4ee" stroke-width="2" filter="url(#shadowTight)"/>
+  <g clip-path="url(#clipKeyWasdA)">
+    <path d="M -8 38 Q 13 35 34 38 Q 55 41 76 38 L 76 56 L -8 56 Z" fill="url(#waterGrad)" opacity="0.88"/>
+    <path d="M 10 37 Q 31 34 52 37 Q 58 40 58 37" stroke="#ffffff" stroke-width="3" stroke-linecap="round" fill="none" opacity="0.70"/>
+    <path d="M 10 43 Q 31 41 52 43 Q 58 45 58 43" stroke="#0b6f9f" stroke-width="1.5" stroke-linecap="round" fill="none" opacity="0.16"/>
+  </g>
+  <text x="34.0" y="38.0" text-anchor="middle" font-family="Arial, sans-serif" font-size="32" fill="#0b6f9f" font-weight="800">A</text>
+</g>
+<g transform="translate(110,88)">
+  <clipPath id="clipKeyWasdS"><rect x="0" y="0" width="68" height="56" rx="18"/></clipPath>
+  <rect x="0" y="0" width="68" height="56" rx="18" fill="#ffffff" fill-opacity="0.90" stroke="#94d4ee" stroke-width="2" filter="url(#shadowTight)"/>
+  <g clip-path="url(#clipKeyWasdS)">
+    <path d="M -8 38 Q 13 35 34 38 Q 55 41 76 38 L 76 56 L -8 56 Z" fill="url(#waterGrad)" opacity="0.88"/>
+    <path d="M 10 37 Q 31 34 52 37 Q 58 40 58 37" stroke="#ffffff" stroke-width="3" stroke-linecap="round" fill="none" opacity="0.70"/>
+    <path d="M 10 43 Q 31 41 52 43 Q 58 45 58 43" stroke="#0b6f9f" stroke-width="1.5" stroke-linecap="round" fill="none" opacity="0.16"/>
+  </g>
+  <text x="34.0" y="38.0" text-anchor="middle" font-family="Arial, sans-serif" font-size="32" fill="#0b6f9f" font-weight="800">S</text>
+</g>
+<g transform="translate(182,88)">
+  <clipPath id="clipKeyWasdD"><rect x="0" y="0" width="68" height="56" rx="18"/></clipPath>
+  <rect x="0" y="0" width="68" height="56" rx="18" fill="#ffffff" fill-opacity="0.90" stroke="#94d4ee" stroke-width="2" filter="url(#shadowTight)"/>
+  <g clip-path="url(#clipKeyWasdD)">
+    <path d="M -8 38 Q 13 35 34 38 Q 55 41 76 38 L 76 56 L -8 56 Z" fill="url(#waterGrad)" opacity="0.88"/>
+    <path d="M 10 37 Q 31 34 52 37 Q 58 40 58 37" stroke="#ffffff" stroke-width="3" stroke-linecap="round" fill="none" opacity="0.70"/>
+    <path d="M 10 43 Q 31 41 52 43 Q 58 45 58 43" stroke="#0b6f9f" stroke-width="1.5" stroke-linecap="round" fill="none" opacity="0.16"/>
+  </g>
+  <text x="34.0" y="38.0" text-anchor="middle" font-family="Arial, sans-serif" font-size="32" fill="#0b6f9f" font-weight="800">D</text>
+</g>
+<text x="130" y="171" text-anchor="middle" font-family="Arial, sans-serif" font-size="15" fill="#5f8498" font-weight="800">ПЕРЕМЕЩЕНИЕ</text>
+
+</g>
+<rect x="284" y="468" width="224" height="146" rx="24" fill="#fbfeff" fill-opacity="0.48" stroke="#c8ecf9" stroke-width="1.5"/>
+<g transform="translate(318, 480) scale(0.62)">
+<rect x="6" y="6" width="168" height="178" rx="32" fill="#ffffff" fill-opacity="0.72" stroke="#c8ecf9" stroke-width="2" filter="url(#shadowSoft)"/>
+<clipPath id="clipMouseWater"><path d="M 88 30 C 58 30 42 54 42 88 L 42 102 C 42 140 60 160 88 160 C 116 160 134 140 134 102 L 134 88 C 134 54 118 30 88 30 Z"/></clipPath>
+<path d="M 88 30 C 58 30 42 54 42 88 L 42 102 C 42 140 60 160 88 160 C 116 160 134 140 134 102 L 134 88 C 134 54 118 30 88 30 Z" fill="#fbfeff" stroke="#94d4ee" stroke-width="2.5"/>
+<path d="M 88 32 L 88 76" stroke="#c8ecf9" stroke-width="2"/>
+<rect x="80" y="48" width="16" height="34" rx="8" fill="#ffffff" stroke="#19aee7" stroke-width="2"/>
+<g clip-path="url(#clipMouseWater)">
+  <path d="M 48 116 Q 69 112 90 116 Q 111 120 128 116 L 128 160 L 48 160 Z" fill="url(#waterGrad)" opacity="0.86"/>
+  <path d="M 54 115 Q 75 112 96 115 Q 117 118 122 115" stroke="#ffffff" stroke-width="3" stroke-linecap="round" fill="none" opacity="0.70"/>
+</g>
+<text x="88" y="170" text-anchor="middle" font-family="Arial, sans-serif" font-size="15" fill="#5f8498" font-weight="800">МЫШЬ</text>
+
+</g>
+<text x="394" y="612" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" fill="#5f8498" font-weight="800">ОБЗОР / УПРАВЛЕНИЕ</text>
+
+</g>
+</svg>

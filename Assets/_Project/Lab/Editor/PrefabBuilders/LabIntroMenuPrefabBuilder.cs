@@ -6,7 +6,7 @@ using UnityEngine.Video;
 
 public static class LabIntroMenuPrefabBuilder
 {
-    private const string PrefabPath = "Assets/_Project/Lab01/Prefabs/LabIntroMenu.prefab";
+    private const string PrefabPath = "Assets/_Project/Lab/Prefabs/LabIntroMenu.prefab";
 
     [MenuItem("Tools/LiquidShader/Create Lab Intro Menu Prefab")]
     public static void CreatePrefab()

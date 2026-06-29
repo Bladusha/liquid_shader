@@ -4,7 +4,8 @@
 
 ## Что здесь лежит
 - `RealPauseMenu.prefab` - основное меню паузы для сцены `real`.
-- `RealHotkeyHints.prefab` - подсказки хоткеев в углу экрана.
+- `RealHotkeyHints.prefab` - runtime-подсказки хоткеев в углу экрана: компактная PNG-версия и анимированная открытая версия внутри одного prefab.
+- `RealHotkeyHintsOpen.prefab` - отдельный готовый prefab открытой версии подсказок, если нужен статичный полный вариант без переключателя.
 - `Lab01TableMenu.prefab` - меню таблицы лабораторной.
 - `Lab01CalculationMenu.prefab` - меню расчётов лабораторной.
 
@@ -12,7 +13,7 @@
 - Не создавай новые копии вручную, если уже есть prefab с тем же назначением. Используй существующий asset и меняй его.
 - Если нужно пересобрать runtime-версию, запусти соответствующий editor-menu item:
   - `Tools/LiquidShader/Create Real Pause Menu Prefab`
-  - `Tools/LiquidShader/Create Real Hotkey Hint Prefab`
+  - `Tools/LiquidShader/Create Real Hotkey Hint Prefabs`
   - `Tools/LiquidShader/Create Lab 01 Work Menu Prefabs`
 - Скрипты в сцене грузят их через `Resources.Load("prefabs/<Name>")`.
 

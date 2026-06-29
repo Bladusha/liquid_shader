@@ -26,12 +26,15 @@ public class Lab01CalculationMenuController : MonoBehaviour
     [SerializeField] private Button submitToTableButton;
     [SerializeField] private Button tableButton;
     [SerializeField] private Button closeButton;
+    [SerializeField] private TMP_Text validationStatusText;
+    [SerializeField] private TMP_Text errorCounterText;
 
     private WaterController waterController;
     private Action closeRequested;
     private Action tableRequested;
     private int lastSnapshotVersion = -1;
     private int selectedRecordIndex = -1;
+    private int errorCount;
     private readonly Dictionary<int, CalculationDraft> draftsByAttempt = new Dictionary<int, CalculationDraft>();
     private bool isRestoringDraft;
 
@@ -51,7 +54,9 @@ public class Lab01CalculationMenuController : MonoBehaviour
         Button calculateReynolds,
         Button submitToTable,
         Button table,
-        Button close)
+        Button close,
+        TMP_Text validationStatus = null,
+        TMP_Text errorCounter = null)
     {
         snapshotText = snapshot;
         recordDropdown = recordView;
@@ -69,6 +74,8 @@ public class Lab01CalculationMenuController : MonoBehaviour
         submitToTableButton = submitToTable;
         tableButton = table;
         closeButton = close;
+        validationStatusText = validationStatus;
+        errorCounterText = errorCounter;
         RefreshBindings();
     }
 
@@ -105,21 +112,24 @@ public class Lab01CalculationMenuController : MonoBehaviour
 
         closeRequested = closeHandler;
         tableRequested = tableHandler;
+        errorCount = 0;
         gameObject.SetActive(true);
         MenuVisibilityCoordinator.SetMenuOpen(MenuId, true);
         EnsureRecordDropdownOptions(true);
         RefreshSnapshotView();
         RefreshCalculationView();
         UpdateCalculationState();
+        UpdateErrorCounter();
+        UpdateValidationFeedback("Введите данные и нажмите кнопку проверки.");
         lastSnapshotVersion = Lab01WorkSession.SnapshotVersion;
     }
 
     public void RefreshBindings()
     {
-        Bind(calculateAreaButton, CalculateArea);
-        Bind(calculateVelocityButton, CalculateVelocity);
-        Bind(calculateViscosityButton, CalculateViscosity);
-        Bind(calculateReynoldsButton, CalculateReynolds);
+        Bind(calculateAreaButton, CheckArea);
+        Bind(calculateVelocityButton, CheckVelocity);
+        Bind(calculateViscosityButton, CheckViscosity);
+        Bind(calculateReynoldsButton, CheckReynolds);
         Bind(submitToTableButton, SubmitToTable);
         Bind(tableButton, OpenTable);
         Bind(closeButton, Close);
@@ -174,6 +184,7 @@ public class Lab01CalculationMenuController : MonoBehaviour
 
         button.onClick.RemoveListener(action);
         button.onClick.AddListener(action);
+        Lab.UI.HydrodynamicWaterButtonAnimator.EnsureOn(button);
     }
 
     private void BindInput(TMP_InputField input)
@@ -203,72 +214,118 @@ public class Lab01CalculationMenuController : MonoBehaviour
         RestoreCurrentDraft();
     }
 
-    private void CalculateArea()
+    private void CheckArea()
     {
         if (!TryRead(diameterInput, out float d))
         {
+            RegisterValidationError("Введите диаметр перед проверкой площади.");
             return;
         }
 
-        if (!Lab01WorkSession.TrySolveArea(d, out float area, out _))
+        if (!TryRead(areaInput, out float enteredArea))
         {
+            RegisterValidationError("Введите площадь перед проверкой.");
             return;
         }
 
-        SetInput(areaInput, area, "F6");
-        SaveCurrentDraft();
-        UpdateCalculationState();
+        float expectedArea = CalculateArea(d);
+        if (!IsApproximately(enteredArea, expectedArea, 0.0005f))
+        {
+            RegisterValidationError($"Площадь неверна. Ожидалось {Lab01WorkSession.Format(expectedArea, "F6")} м2, введено {Lab01WorkSession.Format(enteredArea, "F6")} м2.");
+            return;
+        }
+
+        RegisterValidationSuccess($"Площадь верна: {Lab01WorkSession.Format(expectedArea, "F6")} м2");
     }
 
-    private void CalculateVelocity()
+    private void CheckVelocity()
     {
-        if (!TryRead(flowInput, out float v) || !TryRead(areaInput, out float f) || f <= 0f)
+        if (!TryRead(flowInput, out float flow))
         {
+            RegisterValidationError("Введите расход перед проверкой скорости.");
             return;
         }
 
-        if (!Lab01WorkSession.TrySolveVelocity(v, f, out float velocity, out _))
+        if (!TryRead(areaInput, out float area) || area <= 0f)
         {
+            RegisterValidationError("Введите корректную площадь перед проверкой скорости.");
             return;
         }
 
-        SetInput(velocityInput, velocity, "F3");
-        SaveCurrentDraft();
-        UpdateCalculationState();
+        if (!TryRead(velocityInput, out float enteredVelocity))
+        {
+            RegisterValidationError("Введите скорость перед проверкой.");
+            return;
+        }
+
+        float expectedVelocity = CalculateVelocity(flow, area);
+        if (!IsApproximately(enteredVelocity, expectedVelocity, 0.005f))
+        {
+            RegisterValidationError($"Скорость неверна. Ожидалось {Lab01WorkSession.Format(expectedVelocity, "F3")} м/с, введено {Lab01WorkSession.Format(enteredVelocity, "F3")} м/с.");
+            return;
+        }
+
+        RegisterValidationSuccess($"Скорость верна: {Lab01WorkSession.Format(expectedVelocity, "F3")} м/с");
     }
 
-    private void CalculateViscosity()
+    private void CheckViscosity()
     {
         if (!TryRead(temperatureInput, out float t))
         {
+            RegisterValidationError("Введите температуру перед проверкой вязкости.");
             return;
         }
 
-        if (!Lab01WorkSession.TrySolveViscosity(t, out float viscosity, out _))
+        if (!TryRead(viscosityInput, out float enteredViscosity))
         {
+            RegisterValidationError("Введите вязкость перед проверкой.");
             return;
         }
 
-        SetInput(viscosityInput, viscosity, "E3");
-        SaveCurrentDraft();
-        UpdateCalculationState();
+        float expectedViscosity = CalculateViscosity(t);
+        if (!IsApproximately(enteredViscosity, expectedViscosity, 0.0000005f))
+        {
+            RegisterValidationError($"Вязкость неверна. Ожидалось {Lab01WorkSession.Format(expectedViscosity, "E3")} м2/с, введено {Lab01WorkSession.Format(enteredViscosity, "E3")} м2/с.");
+            return;
+        }
+
+        RegisterValidationSuccess($"Вязкость верна: {Lab01WorkSession.Format(expectedViscosity, "E3")} м2/с");
     }
 
-    private void CalculateReynolds()
+    private void CheckReynolds()
     {
-        if (!TryRead(velocityInput, out float w) || !TryRead(diameterInput, out float d) || !TryRead(viscosityInput, out float viscosity) || viscosity <= 0f)
+        if (!TryRead(velocityInput, out float velocity))
         {
+            RegisterValidationError("Введите скорость перед проверкой числа Рейнольдса.");
             return;
         }
 
-        if (!Lab01WorkSession.TrySolveReynolds(w, d, viscosity, out float reynolds, out _))
+        if (!TryRead(diameterInput, out float diameter))
         {
+            RegisterValidationError("Введите диаметр перед проверкой числа Рейнольдса.");
             return;
         }
 
-        SetInput(reynoldsInput, reynolds, "F0");
-        SaveCurrentDraft();
-        UpdateCalculationState();
+        if (!TryRead(viscosityInput, out float viscosity) || viscosity <= 0f)
+        {
+            RegisterValidationError("Введите корректную вязкость перед проверкой числа Рейнольдса.");
+            return;
+        }
+
+        if (!TryRead(reynoldsInput, out float enteredReynolds))
+        {
+            RegisterValidationError("Введите число Рейнольдса перед проверкой.");
+            return;
+        }
+
+        float expectedReynolds = CalculateReynolds(velocity, diameter, viscosity);
+        if (!IsApproximately(enteredReynolds, expectedReynolds, Mathf.Max(10f, expectedReynolds * 0.01f)))
+        {
+            RegisterValidationError($"Число Рейнольдса неверно. Ожидалось {Lab01WorkSession.Format(expectedReynolds, "F0")}, введено {Lab01WorkSession.Format(enteredReynolds, "F0")}.");
+            return;
+        }
+
+        RegisterValidationSuccess($"Число Рейнольдса верно: {Lab01WorkSession.Format(expectedReynolds, "F0")}");
     }
 
     private void SubmitToTable()
@@ -287,11 +344,15 @@ public class Lab01CalculationMenuController : MonoBehaviour
             !TryRead(viscosityInput, out float viscosity) ||
             !TryRead(reynoldsInput, out float reynolds))
         {
+            RegisterValidationError("Заполните все поля перед внесением данных в таблицу.");
             return;
         }
 
-        if (!Lab01WorkSession.TrySubmitRecord(selectedRecord.AttemptNumber, selectedRecord.Measurements, d, f, v, w, t, viscosity, reynolds, out _))
+        if (!Lab01WorkSession.TrySubmitRecord(selectedRecord.AttemptNumber, selectedRecord.Measurements, d, f, v, w, t, viscosity, reynolds, out string error))
         {
+            RegisterValidationError(string.IsNullOrWhiteSpace(error)
+                ? "Не удалось внести данные в таблицу. Проверьте введённые значения."
+                : error);
             return;
         }
 
@@ -302,6 +363,35 @@ public class Lab01CalculationMenuController : MonoBehaviour
     private void UpdateCalculationState()
     {
         SetInteractable(submitToTableButton, CanSubmitCurrentInputs());
+    }
+
+    private void RegisterValidationError(string message)
+    {
+        errorCount++;
+        UpdateValidationFeedback(message, true);
+        UpdateErrorCounter();
+    }
+
+    private void RegisterValidationSuccess(string message)
+    {
+        UpdateValidationFeedback(message, false);
+    }
+
+    private void UpdateValidationFeedback(string message, bool isError = false)
+    {
+        if (validationStatusText != null)
+        {
+            validationStatusText.text = message;
+            validationStatusText.color = isError ? new Color(0.96f, 0.48f, 0.48f, 1f) : new Color(0.83f, 0.96f, 0.84f, 1f);
+        }
+    }
+
+    private void UpdateErrorCounter()
+    {
+        if (errorCounterText != null)
+        {
+            errorCounterText.text = $"Ошибок: {errorCount}";
+        }
     }
 
     private void EnsureRecordDropdownOptions(bool preferLatest)
@@ -429,6 +519,32 @@ public class Lab01CalculationMenuController : MonoBehaviour
         }
 
         return float.TryParse(input.text.Replace(',', '.'), NumberStyles.Float, CultureInfo.InvariantCulture, out value);
+    }
+
+    private static float CalculateArea(float diameter)
+    {
+        return Mathf.PI * diameter * diameter * 0.25f;
+    }
+
+    private static float CalculateVelocity(float flow, float area)
+    {
+        return flow / area;
+    }
+
+    private static float CalculateViscosity(float temperatureCelsius)
+    {
+        float denominator = 1f + 0.0337f * temperatureCelsius + 0.000221f * temperatureCelsius * temperatureCelsius;
+        return 0.0178f / Mathf.Max(denominator, 0.0001f) * 0.0001f;
+    }
+
+    private static float CalculateReynolds(float velocity, float diameter, float viscosity)
+    {
+        return velocity * diameter / viscosity;
+    }
+
+    private static bool IsApproximately(float a, float b, float tolerance)
+    {
+        return Mathf.Abs(a - b) <= tolerance;
     }
 
     private static void SetInput(TMP_InputField input, float value, string format)

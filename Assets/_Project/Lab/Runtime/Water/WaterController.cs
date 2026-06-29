@@ -5,6 +5,16 @@ using LiquidShader.RuntimeData;
 
 public class WaterController : MonoBehaviour
 {
+    [System.Serializable]
+    private sealed class PipeVisualTarget
+    {
+        public Renderer renderer;
+        public float pathStart = 0f;
+        public float pathEnd = 1f;
+        [Min(0.01f)]
+        public float fillSpeedMultiplier = 1f;
+    }
+
     public struct LabMeasurements
     {
         public float fillFraction;
@@ -31,12 +41,33 @@ public class WaterController : MonoBehaviour
 
     [Header("Renderer")]
     public Renderer waterRenderer;
+    [SerializeField] private PipeVisualTarget[] pipeVisualTargets;
+    [SerializeField] private bool autoDiscoverChildRenderers = true;
     private Material waterMaterial;
+    private readonly Dictionary<Renderer, MaterialPropertyBlock> materialPropertyBlocks = new Dictionary<Renderer, MaterialPropertyBlock>();
+    private readonly List<PipeVisualTarget> resolvedPipeVisualTargets = new List<PipeVisualTarget>();
+    private bool pipeTargetsResolved;
     public float transitionSpeed = 2f;
 
     [Header("Buttons")]
     public BtnSet[] setButtons;
     public BtnPlus[] plusButtons;
+    public BtnOffOn[] offOnButtons;
+
+    [Header("Interaction Prompt Prefabs")]
+    [SerializeField] private InteractionPromptPrefabView btnPlusDisabledPromptPrefab;
+    [SerializeField] private InteractionPromptPrefabView btnPlusHoverPromptPrefab;
+    [SerializeField] private InteractionPromptPrefabView btnPlusActivePromptPrefab;
+    [SerializeField] private InteractionPromptPrefabView btnOffOnTurnOnPromptPrefab;
+    [SerializeField] private InteractionPromptPrefabView btnOffOnTurnOffPromptPrefab;
+    [SerializeField] private InteractionPromptPrefabView btnOffOnInactivePromptPrefab;
+    [SerializeField] private InteractionPromptPrefabView waterControllerDefaultPromptPrefab;
+
+    [Header("Test")]
+    [Range(0f, 1f)]
+    [SerializeField] private float testFillLevel = 0.5f;
+    [SerializeField] private bool testFillLevelOverridesButtons = true;
+    [SerializeField] private bool syncTestFillLevelToCurrentFillOnStart = true;
 
     [Header("Path Range")]
     public float pathStart = 0f;
@@ -59,7 +90,6 @@ public class WaterController : MonoBehaviour
 
     private readonly Dictionary<BtnPlus, float> plusAmounts = new Dictionary<BtnPlus, float>();
     private float nextMeasurementSaveTime;
-
     private float baseFill;
     private float baseFlow;
     private float baseTemperature;
@@ -89,6 +119,7 @@ public class WaterController : MonoBehaviour
     private float curFrontTilt;
     private float curFrontFade;
     private float curAlpha;
+    private float lastAppliedTestFillLevel;
 
     private static readonly int FillLevelId = Shader.PropertyToID("_FillLevel");
     private static readonly int FlowSpeedId = Shader.PropertyToID("_FlowSpeed");
@@ -121,9 +152,12 @@ public class WaterController : MonoBehaviour
 
     private void Start()
     {
-        if (waterRenderer != null)
+        ResolvePipeVisualTargets();
+
+        Renderer primaryRenderer = GetPrimaryRenderer();
+        if (primaryRenderer != null)
         {
-            waterMaterial = waterRenderer.material;
+            waterMaterial = primaryRenderer.material;
             curFill = ReadMaterialFloat(FillLevelId, 0.5f);
             curFlow = ReadMaterialFloat(FlowSpeedId, 0.75f);
             curTemperature = ReadMaterialFloat(TemperatureId, 0.35f);
@@ -157,7 +191,14 @@ public class WaterController : MonoBehaviour
             baseFrontFade = curFrontFade;
             baseAlpha = curAlpha;
 
-            ApplyStaticMaterialSettings();
+            if (syncTestFillLevelToCurrentFillOnStart)
+            {
+                testFillLevel = curFill;
+            }
+
+            lastAppliedTestFillLevel = testFillLevel;
+
+            ApplyMaterialSettings();
 
             if (currentActiveButton != null)
             {
@@ -243,10 +284,6 @@ public class WaterController : MonoBehaviour
 
     private void Update()
     {
-        if (waterMaterial == null) return;
-
-        ApplyStaticMaterialSettings();
-
         curFill = Damp(curFill, targetFill);
         curFlow = Damp(curFlow, targetFlow);
         curTemperature = Damp(curTemperature, targetTemperature);
@@ -257,29 +294,43 @@ public class WaterController : MonoBehaviour
         curFrontFade = Damp(curFrontFade, targetFrontFade);
         curAlpha = Damp(curAlpha, targetAlpha);
 
-        waterMaterial.SetFloat(FillLevelId, curFill);
-        waterMaterial.SetFloat(FlowSpeedId, curFlow);
-        waterMaterial.SetFloat(TemperatureId, curTemperature);
-        waterMaterial.SetFloat(SurfaceOscillationId, curSurfaceOscillation);
-        waterMaterial.SetFloat(BubbleSizeId, curBubbleSize);
-        waterMaterial.SetFloat(BubbleAmountId, curBubbleAmount);
-        waterMaterial.SetFloat(FrontTiltId, curFrontTilt);
-        waterMaterial.SetFloat(FrontFadeId, curFrontFade);
-        waterMaterial.SetFloat(AlphaId, curAlpha);
+        if (testFillLevelOverridesButtons && !Mathf.Approximately(testFillLevel, lastAppliedTestFillLevel))
+        {
+            targetFill = Mathf.Clamp01(testFillLevel);
+            lastAppliedTestFillLevel = testFillLevel;
+        }
+
+        ApplyMaterialSettings();
 
         SaveMeasurementsIfNeeded();
     }
 
-    private void ApplyStaticMaterialSettings()
+    private void ApplyMaterialSettings()
     {
-        waterMaterial.SetFloat(PathStartId, pathStart);
-        waterMaterial.SetFloat(PathEndId, pathEnd);
+        ApplyToPipeVisuals((block, target) =>
+        {
+            float segmentFill = GetSegmentFill(target, curFill);
+
+            block.SetFloat(PathStartId, 0f);
+            block.SetFloat(PathEndId, 1f);
+            block.SetFloat(FillLevelId, segmentFill);
+            block.SetFloat(FlowSpeedId, curFlow);
+            block.SetFloat(TemperatureId, curTemperature);
+            block.SetFloat(SurfaceOscillationId, curSurfaceOscillation);
+            block.SetFloat(BubbleSizeId, curBubbleSize);
+            block.SetFloat(BubbleAmountId, curBubbleAmount);
+            block.SetFloat(FrontTiltId, curFrontTilt);
+            block.SetFloat(FrontFadeId, curFrontFade);
+            block.SetFloat(AlphaId, curAlpha);
+        });
     }
 
     private void BindButtons()
     {
+        ResolvePromptPrefabs();
         AssignController(setButtons);
         AssignController(plusButtons);
+        AssignController(offOnButtons);
     }
 
     private void ResetButtonVisuals()
@@ -341,8 +392,52 @@ public class WaterController : MonoBehaviour
             if (button != null)
             {
                 button.controller = this;
+                button.SetDefaultPromptPrefabs(
+                    btnPlusDisabledPromptPrefab != null ? btnPlusDisabledPromptPrefab : waterControllerDefaultPromptPrefab,
+                    btnPlusHoverPromptPrefab != null ? btnPlusHoverPromptPrefab : waterControllerDefaultPromptPrefab,
+                    btnPlusActivePromptPrefab != null ? btnPlusActivePromptPrefab : waterControllerDefaultPromptPrefab);
             }
         }
+    }
+
+    private void AssignController(BtnOffOn[] buttons)
+    {
+        if (buttons == null || buttons.Length == 0)
+        {
+            buttons = FindObjectsByType<BtnOffOn>(FindObjectsInactive.Include, FindObjectsSortMode.None);
+        }
+
+        if (buttons == null)
+        {
+            return;
+        }
+
+        foreach (BtnOffOn button in buttons)
+        {
+            if (button != null)
+            {
+                button.SetDefaultPromptPrefabs(
+                    btnOffOnTurnOnPromptPrefab != null ? btnOffOnTurnOnPromptPrefab : waterControllerDefaultPromptPrefab,
+                    btnOffOnTurnOffPromptPrefab != null ? btnOffOnTurnOffPromptPrefab : waterControllerDefaultPromptPrefab,
+                    btnOffOnInactivePromptPrefab != null ? btnOffOnInactivePromptPrefab : waterControllerDefaultPromptPrefab);
+            }
+        }
+    }
+
+    private void ResolvePromptPrefabs()
+    {
+        btnPlusDisabledPromptPrefab = ResolvePromptPrefab(btnPlusDisabledPromptPrefab, "InteractionPrompts/Prefabs/Tooltip_BtnPlus_Disabled");
+        btnPlusHoverPromptPrefab = ResolvePromptPrefab(btnPlusHoverPromptPrefab, "InteractionPrompts/Prefabs/Tooltip_BtnPlus_Hover");
+        btnPlusActivePromptPrefab = ResolvePromptPrefab(btnPlusActivePromptPrefab, "InteractionPrompts/Prefabs/Tooltip_BtnPlus_Active");
+        btnOffOnTurnOnPromptPrefab = ResolvePromptPrefab(btnOffOnTurnOnPromptPrefab, "InteractionPrompts/Prefabs/Tooltip_BtnOffOn_TurnOn");
+        btnOffOnTurnOffPromptPrefab = ResolvePromptPrefab(btnOffOnTurnOffPromptPrefab, "InteractionPrompts/Prefabs/Tooltip_BtnOffOn_TurnOff");
+        btnOffOnInactivePromptPrefab = ResolvePromptPrefab(btnOffOnInactivePromptPrefab, "InteractionPrompts/Prefabs/Tooltip_BtnOffOn_Inactive");
+        waterControllerDefaultPromptPrefab = ResolvePromptPrefab(waterControllerDefaultPromptPrefab, "InteractionPrompts/Prefabs/Tooltip_WaterController_Default");
+    }
+
+    private static InteractionPromptPrefabView ResolvePromptPrefab(InteractionPromptPrefabView current, string resourcePath)
+    {
+        return current != null ? current : Resources.Load<InteractionPromptPrefabView>(resourcePath);
     }
 
     private bool IsAssignedSetButton(BtnSet button)
@@ -463,6 +558,12 @@ public class WaterController : MonoBehaviour
         targetFrontTilt = Mathf.Clamp(targetFrontTilt, -1f, 1f);
         targetFrontFade = Mathf.Clamp(targetFrontFade, 0.001f, 0.2f);
         targetAlpha = Mathf.Clamp01(targetAlpha);
+
+        if (testFillLevelOverridesButtons)
+        {
+            testFillLevel = targetFill;
+            lastAppliedTestFillLevel = testFillLevel;
+        }
     }
 
     private float Damp(float current, float target)
@@ -503,7 +604,7 @@ public class WaterController : MonoBehaviour
             $"Заполнение тракта: {m.fillFraction * 100f:F0}% ({m.filledLengthMeters:F2} м)\n\n" +
             "<b>Текущие измеряемые параметры</b>\n" +
             $"Расход: {m.flowRateLitersPerMinute:F2} л/мин\n" +
-            $"Объемный расход: {m.volumetricFlowCubicMetersPerSecond:F6} м3/с\n" +
+            $"Объёмный расход: {m.volumetricFlowCubicMetersPerSecond:F6} м3/с\n" +
             $"Площадь сечения: {m.pipeAreaSquareMeters:F6} м2\n" +
             $"Скорость потока: {m.velocityMetersPerSecond:F3} м/с\n" +
             $"Температура воды: {m.temperatureCelsius:F1} °C\n" +
@@ -643,5 +744,182 @@ public class WaterController : MonoBehaviour
         store.SetValue("Lab01.Reynolds", m.reynoldsNumber.ToString("F0", CultureInfo.InvariantCulture));
         store.SetValue("Lab01.Regime", m.regimeName);
         store.SetValue("Lab01.VisualTurbulencePercent", (m.visualTurbulenceFactor * 100f).ToString("F1", CultureInfo.InvariantCulture));
+    }
+
+    private void ApplyToPipeVisuals(System.Action<MaterialPropertyBlock, PipeVisualTarget> applyBlock)
+    {
+        if (applyBlock == null)
+        {
+            return;
+        }
+
+        ResolvePipeVisualTargets();
+
+        Renderer primaryRenderer = GetPrimaryRenderer();
+        bool appliedAny = false;
+        for (int i = 0; i < resolvedPipeVisualTargets.Count; i++)
+        {
+            PipeVisualTarget target = resolvedPipeVisualTargets[i];
+            if (target == null || target.renderer == null)
+            {
+                continue;
+            }
+
+            MaterialPropertyBlock block = GetMaterialPropertyBlock(target.renderer);
+            applyBlock(block, target);
+            target.renderer.SetPropertyBlock(block);
+            appliedAny = true;
+        }
+
+        if (!appliedAny && primaryRenderer != null && waterMaterial != null)
+        {
+            // Fallback for old setups where only the primary renderer exists.
+            MaterialPropertyBlock block = new MaterialPropertyBlock();
+            PipeVisualTarget fallbackTarget = new PipeVisualTarget
+            {
+                renderer = primaryRenderer,
+                pathStart = pathStart,
+                pathEnd = pathEnd
+            };
+            applyBlock(block, fallbackTarget);
+            primaryRenderer.SetPropertyBlock(block);
+        }
+    }
+
+    private IEnumerable<PipeVisualTarget> EnumeratePipeVisualTargets()
+    {
+        ResolvePipeVisualTargets();
+
+        for (int i = 0; i < resolvedPipeVisualTargets.Count; i++)
+        {
+            yield return resolvedPipeVisualTargets[i];
+        }
+    }
+
+    private MaterialPropertyBlock GetMaterialPropertyBlock(Renderer renderer)
+    {
+        if (!materialPropertyBlocks.TryGetValue(renderer, out MaterialPropertyBlock block) || block == null)
+        {
+            block = new MaterialPropertyBlock();
+            materialPropertyBlocks[renderer] = block;
+        }
+
+        block.Clear();
+        return block;
+    }
+
+    private Renderer GetPrimaryRenderer()
+    {
+        ResolvePipeVisualTargets();
+
+        if (resolvedPipeVisualTargets.Count > 0)
+        {
+            return resolvedPipeVisualTargets[0].renderer;
+        }
+
+        return null;
+    }
+
+    private void ResolvePipeVisualTargets()
+    {
+        if (pipeTargetsResolved)
+        {
+            return;
+        }
+
+        pipeTargetsResolved = true;
+        resolvedPipeVisualTargets.Clear();
+
+        HashSet<Renderer> seenRenderers = new HashSet<Renderer>();
+
+        AddResolvedTarget(waterRenderer, pathStart, pathEnd, 1f, seenRenderers);
+
+        if (pipeVisualTargets != null)
+        {
+            for (int i = 0; i < pipeVisualTargets.Length; i++)
+            {
+                PipeVisualTarget target = pipeVisualTargets[i];
+                if (target == null)
+                {
+                    continue;
+                }
+
+                AddResolvedTarget(target.renderer, target.pathStart, target.pathEnd, target.fillSpeedMultiplier, seenRenderers);
+            }
+        }
+
+        if (autoDiscoverChildRenderers)
+        {
+            Renderer[] childRenderers = GetComponentsInChildren<Renderer>(true);
+            List<Renderer> discoveredRenderers = new List<Renderer>();
+
+            for (int i = 0; i < childRenderers.Length; i++)
+            {
+                Renderer renderer = childRenderers[i];
+                if (renderer == null || !seenRenderers.Add(renderer))
+                {
+                    continue;
+                }
+
+                discoveredRenderers.Add(renderer);
+            }
+
+            int discoveredCount = discoveredRenderers.Count;
+            for (int i = 0; i < discoveredCount; i++)
+            {
+                float start = discoveredCount > 0 ? (float)i / discoveredCount : 0f;
+                float end = discoveredCount > 0 ? (float)(i + 1) / discoveredCount : 1f;
+                resolvedPipeVisualTargets.Add(new PipeVisualTarget
+                {
+                    renderer = discoveredRenderers[i],
+                    pathStart = start,
+                    pathEnd = end,
+                    fillSpeedMultiplier = 1f
+                });
+            }
+        }
+    }
+
+    private void AddResolvedTarget(Renderer renderer, float start, float end, float speedMultiplier, HashSet<Renderer> seenRenderers)
+    {
+        if (renderer == null || !seenRenderers.Add(renderer))
+        {
+            return;
+        }
+
+        resolvedPipeVisualTargets.Add(new PipeVisualTarget
+        {
+            renderer = renderer,
+            pathStart = start,
+            pathEnd = end,
+            fillSpeedMultiplier = Mathf.Max(0.01f, speedMultiplier)
+        });
+    }
+
+    private float GetSegmentFill(PipeVisualTarget target, float globalFill)
+    {
+        if (target == null)
+        {
+            return Mathf.Clamp01(globalFill);
+        }
+
+        float segmentStart = Mathf.Clamp01(target.pathStart);
+        float segmentEnd = Mathf.Clamp01(target.pathEnd);
+        if (segmentEnd < segmentStart)
+        {
+            float swap = segmentStart;
+            segmentStart = segmentEnd;
+            segmentEnd = swap;
+        }
+
+        float segmentLength = segmentEnd - segmentStart;
+        if (segmentLength <= 0.0001f)
+        {
+            return globalFill >= segmentEnd ? 1f : 0f;
+        }
+
+        float speedMultiplier = target != null ? Mathf.Max(0.01f, target.fillSpeedMultiplier) : 1f;
+        float adjustedSegmentLength = segmentLength / speedMultiplier;
+        return Mathf.Clamp01((globalFill - segmentStart) / adjustedSegmentLength);
     }
 }

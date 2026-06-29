@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="160" height="160" viewBox="0 0 160 160" fill="none">
+<defs>
+  <linearGradient id="waterGrad" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0%" stop-color="#ffffff"/>
+    <stop offset="48%" stop-color="#73d8ff"/>
+    <stop offset="100%" stop-color="#19aee7"/>
+  </linearGradient>
+  <linearGradient id="waterLine" x1="0" y1="0" x2="1" y2="0">
+    <stop offset="0%" stop-color="#73d8ff"/>
+    <stop offset="58%" stop-color="#19aee7"/>
+    <stop offset="100%" stop-color="#0b6f9f"/>
+  </linearGradient>
+  <filter id="shadowSoft" x="-18%" y="-22%" width="136%" height="148%">
+    <feDropShadow dx="0" dy="10" stdDeviation="14" flood-color="#75aec8" flood-opacity="0.22"/>
+  </filter>
+  <filter id="shadowTight" x="-18%" y="-28%" width="136%" height="156%">
+    <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#75aec8" flood-opacity="0.20"/>
+  </filter>
+  
+</defs>
+<rect x="6" y="6" width="148" height="148" rx="30" fill="#ffffff" fill-opacity="0.78" stroke="#c8ecf9" stroke-width="2" filter="url(#shadowSoft)"/>
+<g transform="translate(38,22)">
+  <clipPath id="clipKeySoloC"><rect x="0" y="0" width="84" height="66" rx="18"/></clipPath>
+  <rect x="0" y="0" width="84" height="66" rx="18" fill="#ffffff" fill-opacity="0.90" stroke="#94d4ee" stroke-width="2" filter="url(#shadowTight)"/>
+  <g clip-path="url(#clipKeySoloC)">
+    <path d="M -8 48 Q 13 45 34 48 Q 55 51 76 48 Q 92 45 92 48 L 92 66 L -8 66 Z" fill="url(#waterGrad)" opacity="0.88"/>
+    <path d="M 10 47 Q 31 44 52 47 Q 73 50 74 47" stroke="#ffffff" stroke-width="3" stroke-linecap="round" fill="none" opacity="0.70"/>
+    <path d="M 10 53 Q 31 51 52 53 Q 73 55 74 53" stroke="#0b6f9f" stroke-width="1.5" stroke-linecap="round" fill="none" opacity="0.16"/>
+  </g>
+  <text x="42.0" y="43.0" text-anchor="middle" font-family="Arial, sans-serif" font-size="32" fill="#0b6f9f" font-weight="800">C</text>
+</g>
+<text x="80" y="124" text-anchor="middle" font-family="Arial, sans-serif" font-size="17" fill="#5f8498" font-weight="800">расчёты</text>
+</svg>

@@ -1,15 +1,11 @@
-using System.Collections;
-using EasyPeasyFirstPersonController;
 using UnityEngine;
 
-public class BtnPlus : MonoBehaviour, WorkzoneSelectionController.IInteractable
+public class BtnPlus : MonoBehaviour, WorkzoneSelectionController.IInteractable, IHoverable, IInteractionPromptProvider
 {
     [Header("Связи")]
     public WaterController controller;
     public Transform buttonVisual;
     public Transform knobTransform;
-    public Transform viewingPoint;
-    public FirstPersonController playerController;
 
     [Header("Добавка к текущему режиму")]
     [Range(-1f, 1f)] public float fillLevelDelta = 0f;
@@ -23,10 +19,7 @@ public class BtnPlus : MonoBehaviour, WorkzoneSelectionController.IInteractable
     [Range(-1f, 1f)] public float alphaDelta = 0f;
 
     [Header("Режим настройки")]
-    public KeyCode exitKey = KeyCode.E;
-    public float rotationSensitivity = 0.35f;
-    public float transitionDuration = 0.35f;
-    public float viewingFov = 45f;
+    [SerializeField] private float rotationSensitivity = 0.35f;
     [Range(0f, 1f)] public float currentOpenAmount = 0f;
     public Axis rotationAxis = Axis.Y;
     public float minAngle = -90f;
@@ -36,18 +29,27 @@ public class BtnPlus : MonoBehaviour, WorkzoneSelectionController.IInteractable
     public Vector3 pressedOffset = new Vector3(0, -0.05f, 0);
     public float animSpeed = 6f;
 
-    private static BtnPlus activeEditingButton;
+    [Header("Hover")]
+    [SerializeField] private bool useHoverOutline = true;
+    [SerializeField] private Transform hoverOutlineTarget;
+    [SerializeField] private Color hoverOutlineColor = Color.yellow;
+    [SerializeField, Range(0f, 10f)] private float hoverOutlineWidth = 5f;
+    [SerializeField] private Color activeOutlineColor = Color.green;
+    [SerializeField, Range(0f, 10f)] private float activeOutlineWidth = 3f;
+
+    [Header("Notifications")]
+    [SerializeField] private InteractionPromptPrefabView promptPrefab;
+    [SerializeField] private InteractionPromptPrefabView disabledPromptPrefab;
+    [SerializeField] private InteractionPromptPrefabView hoverPromptPrefab;
+    [SerializeField] private InteractionPromptPrefabView activePromptPrefab;
+    [SerializeField] private Transform promptAnchor;
+    [SerializeField] private Vector2 promptScreenOffset = new Vector2(0f, 80f);
 
     private Vector3 startPos;
     private bool isActivated;
     private bool isEditing;
-    private Camera playerCamera;
-    private Transform originalCameraParent;
-    private Vector3 originalCameraPosition;
-    private Quaternion originalCameraRotation;
-    private float originalCameraFov;
-    private Coroutine cameraMoveRoutine;
-    private bool wasControllerEnabled;
+    private bool isHovered;
+    private Outline runtimeOutline;
 
     public enum Axis
     {
@@ -57,22 +59,29 @@ public class BtnPlus : MonoBehaviour, WorkzoneSelectionController.IInteractable
     }
 
     public bool IsEditing => isEditing;
-    public static BtnPlus ActiveEditingButton => activeEditingButton;
     public static bool AnyEditing => activeEditingButton != null;
-
-    private void Awake()
+    public static BtnPlus ActiveEditingButton => activeEditingButton;
+    public bool IsInteractionActive => isEditing;
+    public InteractionPromptPrefabView InteractionPromptPrefab
     {
-        if (playerController == null)
+        get
         {
-            playerController = FindAnyObjectByType<FirstPersonController>();
-        }
+            LabWorkZoneController workZone = LabWorkZoneController.Instance;
+            if (workZone != null && !workZone.AreControlsEnabled)
+            {
+                return disabledPromptPrefab != null ? disabledPromptPrefab : promptPrefab;
+            }
 
-        if (playerController != null)
-        {
-            playerCamera = playerController.GetComponentInChildren<Camera>();
+            if (isEditing)
+            {
+                return activePromptPrefab != null ? activePromptPrefab : promptPrefab;
+            }
+
+            return hoverPromptPrefab != null ? hoverPromptPrefab : promptPrefab;
         }
     }
-
+    public Transform InteractionPromptAnchor => promptAnchor != null ? promptAnchor : transform;
+    public Vector2 InteractionPromptScreenOffset => promptScreenOffset;
     private void Start()
     {
         if (buttonVisual != null)
@@ -91,6 +100,32 @@ public class BtnPlus : MonoBehaviour, WorkzoneSelectionController.IInteractable
         RefreshPressedState();
     }
 
+    public void SetDefaultPromptPrefabs(
+        InteractionPromptPrefabView disabledPrefab,
+        InteractionPromptPrefabView hoverPrefab,
+        InteractionPromptPrefabView activePrefab)
+    {
+        if (disabledPromptPrefab == null)
+        {
+            disabledPromptPrefab = disabledPrefab;
+        }
+
+        if (hoverPromptPrefab == null)
+        {
+            hoverPromptPrefab = hoverPrefab;
+        }
+
+        if (activePromptPrefab == null)
+        {
+            activePromptPrefab = activePrefab;
+        }
+
+        if (promptPrefab == null)
+        {
+            promptPrefab = hoverPromptPrefab != null ? hoverPromptPrefab : activePromptPrefab;
+        }
+    }
+
     private void Update()
     {
         if (buttonVisual != null)
@@ -104,12 +139,19 @@ public class BtnPlus : MonoBehaviour, WorkzoneSelectionController.IInteractable
             return;
         }
 
-        HandleEditingInput();
-
-        if (InputSystemCompat.GetKeyDown(exitKey) || InputSystemCompat.GetKeyDown(KeyCode.Escape))
+        if (!CanUseInCurrentWorkZone())
         {
             ExitEditMode();
+            return;
         }
+
+        if (!InputSystemCompat.GetMouseButton(0))
+        {
+            ExitEditMode();
+            return;
+        }
+
+        HandleEditingInput();
     }
 
     public void Interact()
@@ -119,12 +161,7 @@ public class BtnPlus : MonoBehaviour, WorkzoneSelectionController.IInteractable
             return;
         }
 
-        Press();
-    }
-
-    public void Press()
-    {
-        if (MenuVisibilityCoordinator.AnyMenuOpen && !isEditing)
+        if (!CanUseInCurrentWorkZone())
         {
             return;
         }
@@ -138,14 +175,26 @@ public class BtnPlus : MonoBehaviour, WorkzoneSelectionController.IInteractable
         EnterEditMode();
     }
 
+    public void Press()
+    {
+        Interact();
+    }
+
     public void SetPressedVisual(bool pressed)
     {
         isActivated = pressed;
+        ApplyHoverOutline();
+    }
+
+    public void SetHoverState(bool active)
+    {
+        isHovered = active;
+        ApplyHoverOutline();
     }
 
     private void EnterEditMode()
     {
-        if (controller == null || playerController == null || playerCamera == null || viewingPoint == null)
+        if (controller == null || !CanUseInCurrentWorkZone())
         {
             return;
         }
@@ -157,27 +206,14 @@ public class BtnPlus : MonoBehaviour, WorkzoneSelectionController.IInteractable
 
         activeEditingButton = this;
         isEditing = true;
-        wasControllerEnabled = playerController.enabled;
 
-        originalCameraParent = playerCamera.transform.parent;
-        originalCameraPosition = playerCamera.transform.position;
-        originalCameraRotation = playerCamera.transform.rotation;
-        originalCameraFov = playerCamera.fieldOfView;
-
-        playerController.SetMoveControl(false);
-        playerController.DisableAllMovement();
-        playerController.enabled = false;
-
-        if (WorkzoneSelectionController.Instance != null)
-        {
-            WorkzoneSelectionController.Instance.SetRaycastPaused(true);
-        }
-
-        Cursor.visible = false;
-        Cursor.lockState = CursorLockMode.None;
-
-        StartMoveCamera(viewingPoint.position, viewingPoint.rotation, viewingFov);
         RefreshPressedState();
+    }
+
+    private bool CanUseInCurrentWorkZone()
+    {
+        LabWorkZoneController workZone = LabWorkZoneController.Instance;
+        return workZone == null || (workZone.IsWorkModeActive && workZone.AreControlsEnabled);
     }
 
     private void ExitEditMode()
@@ -188,46 +224,53 @@ public class BtnPlus : MonoBehaviour, WorkzoneSelectionController.IInteractable
         }
 
         isEditing = false;
-
         SceneActivityLog.Add("Взаимодействие", $"BtnPlus {name}: {Mathf.RoundToInt(currentOpenAmount * 100f)}%");
-
         if (activeEditingButton == this)
         {
             activeEditingButton = null;
         }
 
-        InteractionFeedback feedback = GetComponentInParent<InteractionFeedback>();
-        if (feedback != null)
-        {
-            feedback.SetActiveState(false);
-        }
-
-        StartMoveCamera(originalCameraPosition, originalCameraRotation, originalCameraFov, true);
         RefreshPressedState();
     }
 
-    private void FinishExitMode()
+    private void ApplyHoverOutline()
     {
-        if (playerCamera != null)
+        if (!useHoverOutline)
         {
-            playerCamera.transform.SetParent(originalCameraParent);
+            return;
         }
 
-        if (playerController != null)
+        Outline outline = GetOrCreateOutline();
+        if (outline == null)
         {
-            playerController.enabled = wasControllerEnabled;
-            playerController.SetMoveControl(true);
-            playerController.EnableAllMovement();
+            return;
         }
 
-        if (WorkzoneSelectionController.Instance != null)
+        bool active = isHovered || isEditing || currentOpenAmount > 0.001f;
+        outline.OutlineMode = Outline.Mode.OutlineAll;
+        outline.OutlineColor = isEditing ? activeOutlineColor : hoverOutlineColor;
+        outline.OutlineWidth = isEditing ? activeOutlineWidth : hoverOutlineWidth;
+        outline.enabled = active;
+    }
+
+    private Outline GetOrCreateOutline()
+    {
+        Transform target = hoverOutlineTarget != null ? hoverOutlineTarget : transform;
+        if (target == null)
         {
-            WorkzoneSelectionController.Instance.SetRaycastPaused(false);
+            return null;
         }
 
-        Cursor.visible = false;
-        Cursor.lockState = CursorLockMode.Locked;
-        RefreshPressedState();
+        if (runtimeOutline == null)
+        {
+            runtimeOutline = target.GetComponent<Outline>();
+            if (runtimeOutline == null)
+            {
+                runtimeOutline = target.gameObject.AddComponent<Outline>();
+            }
+        }
+
+        return runtimeOutline;
     }
 
     private void HandleEditingInput()
@@ -283,46 +326,13 @@ public class BtnPlus : MonoBehaviour, WorkzoneSelectionController.IInteractable
         SetPressedVisual(isEditing || currentOpenAmount > 0.001f);
     }
 
-    private void StartMoveCamera(Vector3 targetPosition, Quaternion targetRotation, float targetFov, bool isReturning = false)
+    private static BtnPlus activeEditingButton;
+
+    public static void ForceCloseActiveEditing()
     {
-        if (cameraMoveRoutine != null)
+        if (activeEditingButton != null)
         {
-            StopCoroutine(cameraMoveRoutine);
-        }
-
-        cameraMoveRoutine = StartCoroutine(MoveCamera(targetPosition, targetRotation, targetFov, isReturning));
-    }
-
-    private IEnumerator MoveCamera(Vector3 targetPosition, Quaternion targetRotation, float targetFov, bool isReturning = false)
-    {
-        playerCamera.transform.SetParent(null);
-
-        float elapsed = 0f;
-        Vector3 startPosition = playerCamera.transform.position;
-        Quaternion startRotation = playerCamera.transform.rotation;
-        float startFov = playerCamera.fieldOfView;
-
-        while (elapsed < transitionDuration)
-        {
-            float t = elapsed / transitionDuration;
-            t = t * t * (3f - 2f * t);
-
-            playerCamera.transform.position = Vector3.Lerp(startPosition, targetPosition, t);
-            playerCamera.transform.rotation = Quaternion.Slerp(startRotation, targetRotation, t);
-            playerCamera.fieldOfView = Mathf.Lerp(startFov, targetFov, t);
-
-            elapsed += Time.deltaTime;
-            yield return null;
-        }
-
-        playerCamera.transform.position = targetPosition;
-        playerCamera.transform.rotation = targetRotation;
-        playerCamera.fieldOfView = targetFov;
-        cameraMoveRoutine = null;
-
-        if (isReturning)
-        {
-            FinishExitMode();
+            activeEditingButton.ExitEditMode();
         }
     }
 }

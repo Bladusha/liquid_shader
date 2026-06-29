@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080" fill="none">
+<defs>
+  <linearGradient id="waterGrad" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0%" stop-color="#ffffff"/>
+    <stop offset="48%" stop-color="#73d8ff"/>
+    <stop offset="100%" stop-color="#19aee7"/>
+  </linearGradient>
+  <linearGradient id="waterLine" x1="0" y1="0" x2="1" y2="0">
+    <stop offset="0%" stop-color="#73d8ff"/>
+    <stop offset="58%" stop-color="#19aee7"/>
+    <stop offset="100%" stop-color="#0b6f9f"/>
+  </linearGradient>
+  <filter id="shadowSoft" x="-18%" y="-22%" width="136%" height="148%">
+    <feDropShadow dx="0" dy="10" stdDeviation="14" flood-color="#75aec8" flood-opacity="0.22"/>
+  </filter>
+  <filter id="shadowTight" x="-18%" y="-28%" width="136%" height="156%">
+    <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#75aec8" flood-opacity="0.20"/>
+  </filter>
+  
+</defs>
+<rect x="0" y="0" width="1920" height="1080" fill="#ffffff"/>
+<path d="M 160 0 L 160 1080" stroke="#c8ecf9" stroke-width="1" opacity="0.22"/>
+<path d="M 320 0 L 320 1080" stroke="#c8ecf9" stroke-width="1" opacity="0.22"/>
+<path d="M 480 0 L 480 1080" stroke="#c8ecf9" stroke-width="1" opacity="0.22"/>
+<path d="M 640 0 L 640 1080" stroke="#c8ecf9" stroke-width="1" opacity="0.22"/>
+<path d="M 800 0 L 800 1080" stroke="#c8ecf9" stroke-width="1" opacity="0.22"/>
+<path d="M 960 0 L 960 1080" stroke="#c8ecf9" stroke-width="1" opacity="0.22"/>
+<path d="M 1120 0 L 1120 1080" stroke="#c8ecf9" stroke-width="1" opacity="0.22"/>
+<path d="M 1280 0 L 1280 1080" stroke="#c8ecf9" stroke-width="1" opacity="0.22"/>
+<path d="M 1440 0 L 1440 1080" stroke="#c8ecf9" stroke-width="1" opacity="0.22"/>
+<path d="M 1600 0 L 1600 1080" stroke="#c8ecf9" stroke-width="1" opacity="0.22"/>
+<path d="M 1760 0 L 1760 1080" stroke="#c8ecf9" stroke-width="1" opacity="0.22"/>
+<path d="M 0 120 L 1920 120" stroke="#c8ecf9" stroke-width="1" opacity="0.18"/>
+<path d="M 0 240 L 1920 240" stroke="#c8ecf9" stroke-width="1" opacity="0.18"/>
+<path d="M 0 360 L 1920 360" stroke="#c8ecf9" stroke-width="1" opacity="0.18"/>
+<path d="M 0 480 L 1920 480" stroke="#c8ecf9" stroke-width="1" opacity="0.18"/>
+<path d="M 0 600 L 1920 600" stroke="#c8ecf9" stroke-width="1" opacity="0.18"/>
+<path d="M 0 720 L 1920 720" stroke="#c8ecf9" stroke-width="1" opacity="0.18"/>
+<path d="M 0 840 L 1920 840" stroke="#c8ecf9" stroke-width="1" opacity="0.18"/>
+<path d="M 0 960 L 1920 960" stroke="#c8ecf9" stroke-width="1" opacity="0.18"/>
+<path d="M -40 904 Q 35 886 110 904 Q 185 922 260 904 Q 335 886 410 904 Q 485 922 560 904 Q 635 886 710 904 Q 785 922 860 904 Q 935 886 1010 904 Q 1085 922 1160 904 Q 1235 886 1310 904 Q 1385 922 1460 904 Q 1535 886 1610 904 Q 1685 922 1760 904 Q 1835 886 1910 904 Q 1960 922 1960 904 L 1960 1080 L -40 1080 Z" fill="#e5f7ff"/>
+<path d="M -40 950 Q 20 936 80 950 Q 140 964 200 950 Q 260 936 320 950 Q 380 964 440 950 Q 500 936 560 950 Q 620 964 680 950 Q 740 936 800 950 Q 860 964 920 950 Q 980 936 1040 950 Q 1100 964 1160 950 Q 1220 936 1280 950 Q 1340 964 1400 950 Q 1460 936 1520 950 Q 1580 964 1640 950 Q 1700 936 1760 950 Q 1820 964 1880 950 Q 1940 936 1960 950 L 1960 1080 L -40 1080 Z" fill="#73d8ff" opacity="0.36"/>
+</svg>
